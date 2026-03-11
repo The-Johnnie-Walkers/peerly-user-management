@@ -3,6 +3,7 @@ import { FreeTimeSchedule } from './free-time-schedule.entity'
 import { Program } from '../enums/program.enum'
 import { Status } from '../enums/status.enum'
 
+
 export class User {
     constructor(
         public id: string,
