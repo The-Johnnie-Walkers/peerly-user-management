@@ -10,13 +10,13 @@ export type InterestDocument = HydratedDocument<InterestSchema>
 export class InterestSchema{
 
     @Prop({required: true})
-    name: String;
+    name: string;
 
     @Prop({required: true})
     category: Category;
 
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], default: []})
-    users: Array<mongoose.Schema.Types.ObjectId>;
+    users: mongoose.Types.ObjectId[];
 
 
 }

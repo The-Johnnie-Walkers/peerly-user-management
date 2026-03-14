@@ -3,9 +3,9 @@ import { User } from './user.entity';
 
 export class Interest{
     constructor(
-        public id: String,
-        public name: String,
+        public id: string,
+        public name: string,
         public category: Category,
-        public users: Array<User>
+        public users: User[]
     ) {}
 }

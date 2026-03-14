@@ -7,11 +7,14 @@ import * as mongoose from 'mongoose';
 
 export type UserDocument = HydratedDocument<UserSchema>;
 
-@Schema({ timestamps: true})
+@Schema({ timestamps: true })
 export class UserSchema {
 
     @Prop({ required: true })
     username: string;
+
+    @Prop({ required: true })
+    name: string; 
 
     @Prop({ required: true })
     lastname: string;
@@ -20,19 +23,19 @@ export class UserSchema {
     email: string;
 
     @Prop()
-    description?: string;
+    description: string;
 
     @Prop({ required: true })
     birthDate: Date;
     
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Interests' }], default: []})
-    interests: Array<mongoose.Types.ObjectId>;
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Interest' }], default: []})
+    interests: mongoose.Types.ObjectId[];
     
     @Prop()
-    profilePicURL?: string;
+    profilePicURL: string;
     
     @Prop()
-    lastTimeConnected?: Date;
+    lastTimeConnected: Date;
     
     @Prop({ required: true })
     semester: number;
@@ -43,8 +46,12 @@ export class UserSchema {
     @Prop({ required: false })
     isVerified: boolean;
     
+    createdAt: Date;
+
+    updatedAt: Date;
+
     @Prop({ type: [FreeTimeScheduleSchema], default: [] })
-    freeTimeSchedule: Array<FreeTimeScheduleSchema>;
+    freeTimeSchedule: FreeTimeScheduleSchema[];
     
     @Prop({ required: true })
     status: Status;
