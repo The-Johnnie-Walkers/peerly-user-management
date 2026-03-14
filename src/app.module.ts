@@ -3,9 +3,23 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './modules/user/user.module';
+import { ConfigModule, ConfigService } from '@nestjs/config'
 
 @Module({
-  imports: [ UserModule, MongooseModule.forRoot('mongodb+srv://danpame1219_db_user:Sirha2025-2@sirhadb.iblyyvg.mongodb.net/peerly-users-management-db?retryWrites=true&w=majority')],
+  imports: [ 
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('DB_URI'),
+      }),
+      inject: [ConfigService],
+    }),
+    UserModule, 
+  ],
+
   controllers: [AppController],
   providers: [AppService],
 })
