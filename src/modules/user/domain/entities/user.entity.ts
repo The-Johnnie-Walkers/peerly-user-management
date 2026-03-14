@@ -13,14 +13,15 @@ export class User {
         public email: string,
         public description: string,
         public birthDate: Date,
-        public interests: Array<Interest>,
+        public interests: Interest[],
         public profilePicURL: string,
         public lastTimeConnected: Date,
         public semester: number,
         public isOnline: boolean,
         public isVerified: boolean,
         public createdAt: Date,
-        public freeTimeSchedule: Array<FreeTimeSchedule>,
+        public updatedAt: Date,
+        public freeTimeSchedule: FreeTimeSchedule[],
         public status: Status,
         public program: Program
     ) {}
