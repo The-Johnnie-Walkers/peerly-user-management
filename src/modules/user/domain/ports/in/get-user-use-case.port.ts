@@ -2,6 +2,6 @@ import { User } from "../../entities/user.entity";
 
 export interface GetUserUseCase {
 
-    getUserById(id: string): User;
+    getUserById(id: string): Promise<User>;
 
 }

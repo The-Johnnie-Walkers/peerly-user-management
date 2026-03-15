@@ -2,14 +2,14 @@ import { User } from "../../entities/user.entity";
 
 export interface UserRepositoryOutPort {
 
-    create(user: User): User;
+    create(user: User): Promise<User>;
 
-    update(id: string, user: User): User;
+    update(id: string, user: User): Promise<User>;
 
     deleteById(id: string): void;
 
-    getAll(): User[];
+    getAll(): Promise<User[]>;
 
-    getById(id: string): User;
+    getById(id: string): Promise<User>;
     
 }
