@@ -73,7 +73,6 @@ export class UserUseCasesImpl implements UserRepositoryOutPort {
         }
 
         return this.userMapper.toDomain(savedDocument);
-
     }
     
     deleteById(id: string): void {
@@ -95,10 +94,9 @@ export class UserUseCasesImpl implements UserRepositoryOutPort {
     }
 
     async getAll(): Promise<User[]> {
-        
-        const users = await this.userRepository.findAll();
 
-        return users;
+        return await this.userRepository.findAll();
+        
     }
 
 

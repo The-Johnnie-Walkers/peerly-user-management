@@ -12,11 +12,11 @@ export class InterestService implements CreateInterestUseCase, UpdateInterestUse
         private interestRepositoryOutPort: InterestRepositoryOutPort
     ){}
 
-    createInterest(interest: Interest): Interest {
+    createInterest(interest: Interest): Promise<Interest> {
         return this.interestRepositoryOutPort.create(interest);
     }
 
-    updateInterest(id: string, interest: Interest): Interest {
+    updateInterest(id: string, interest: Interest): Promise<Interest> {
         return this.interestRepositoryOutPort.update(id, interest);
     }
 
@@ -24,11 +24,11 @@ export class InterestService implements CreateInterestUseCase, UpdateInterestUse
         this.interestRepositoryOutPort.deleteById(id);
     }
 
-    getInterestById(id: string): Interest {
+    getInterestById(id: string): Promise<Interest> {
         return this.interestRepositoryOutPort.getById(id);
     }
 
-    getAllInterests(): Interest[] {
+    getAllInterests(): Promise<Interest[]> {
         return this.interestRepositoryOutPort.getAll();
     }
 }
