@@ -17,7 +17,7 @@ export class UserResponseDTO{
 
     interests: Interest[];
 
-    profielPicURL: string;
+    profilePicURL: string;
 
     lastTimeConnected: Date;
 

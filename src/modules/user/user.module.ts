@@ -7,6 +7,7 @@ import { InterestSchemaDefinition } from './infraestructure/adapters/out/persist
 import { UserMapper } from './infraestructure/adapters/out/persistence/mappers/user.mapper';
 import { UserRepository } from './infraestructure/adapters/out/persistence/repositories/user.repository';
 import { InterestRepository } from './infraestructure/adapters/out/persistence/repositories/interest.repository';
+import { UserController } from './infraestructure/adapters/in/http/controllers/user.controller';
 
 @Module({
     imports: [
@@ -26,7 +27,7 @@ import { InterestRepository } from './infraestructure/adapters/out/persistence/r
     ],
 
     controllers: [
-
+        UserController
     ],
 })
 export class UserModule {

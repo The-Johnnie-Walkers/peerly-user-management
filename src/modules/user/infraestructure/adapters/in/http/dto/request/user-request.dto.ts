@@ -26,7 +26,7 @@ export class UserRequestDTO {
 
     interests: Interest[];
 
-    profielPicURL: string;
+    profilePicURL: string;
 
     @IsNumber()
     semester: number;
