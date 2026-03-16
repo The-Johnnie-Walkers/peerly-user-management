@@ -51,7 +51,8 @@ export class UserController {
 
     @Get('')
     async getAllUsers(): Promise<UserResponseDTO[]> {
-        return await this.getAllUsersUseCase.getAllUsers();
+        const users = await this.getAllUsersUseCase.getAllUsers();
+        return this.userMapper.toResponseList(users);
     }
 
 

@@ -3,6 +3,12 @@ import { UserRequestDTO } from "../../infraestructure/adapters/in/http/dto/reque
 import { User } from "../../domain/entities/user.entity";
 import { Status } from "../../domain/enums/status.enum";
 import { UserResponseDTO } from "../../infraestructure/adapters/in/http/dto/response/user-response.dto";
+import { InterestRequestDTO } from "../../infraestructure/adapters/in/http/dto/request/interest-request.dto";
+import { Interest } from "../../domain/entities/interest.entity";
+import { InterestResponseDTO } from "../../infraestructure/adapters/in/http/dto/response/interest-response.dto";
+import { FreeTimeScheduleRequestDTO } from "../../infraestructure/adapters/in/http/dto/request/free-time-schedule-request.dto";
+import { FreeTimeSchedule } from "../../domain/entities/free-time-schedule.entity";
+import { FreeTimeScheduleResponseDTO } from "../../infraestructure/adapters/in/http/dto/response/free-time-schedule-response.dto";
 
 
 
@@ -70,4 +76,62 @@ export class UserMapperApplication {
         program: user.program,
       }
     }
-}
+
+    toResponseList(users: User[]): UserResponseDTO[] {
+      return users.map((user) => this.toResponse(user));
+    }
+
+
+    toInterestDomain(interestRequest: InterestRequestDTO): Interest {
+      return new Interest (
+        '',
+        interestRequest.name,
+        interestRequest.category,
+        []
+      )
+    }
+
+    mergeForInterestUpdate(currentInterest: Interest, dto: InterestRequestDTO): Interest {
+      currentInterest.name = dto.name;
+      currentInterest.category = dto.category;
+
+      return currentInterest
+    }
+
+    toInterestResponse(interest: Interest): InterestResponseDTO {
+      return {
+        name: interest.name,
+        category: interest.category,
+      }
+    }
+
+    toInterestResponseList(interests: Interest[]): InterestResponseDTO[] {
+      return interests.map((interest) => this.toInterestResponse(interest));
+    }
+
+    toFreeTimeSchedule(freeTimeScheduleRequest: FreeTimeScheduleRequestDTO): FreeTimeSchedule {
+      return new FreeTimeSchedule(
+        '',
+        freeTimeScheduleRequest.startsAt,
+        freeTimeScheduleRequest.endsAt,
+        freeTimeScheduleRequest.dayOfTheWeek
+      )
+    }
+
+    mergeForFreeTimeScheduleUpdate(currentFreeTime: FreeTimeSchedule, dto: FreeTimeScheduleRequestDTO): FreeTimeSchedule {
+      currentFreeTime.startsAt = dto.startsAt;
+      currentFreeTime.endsAt = dto.endsAt;
+      currentFreeTime.dayOfTheWeek = dto.dayOfTheWeek;
+
+      return currentFreeTime
+    }
+
+    toFreeTimeScheduleResponse(freeTimeSchedule: FreeTimeSchedule): FreeTimeScheduleResponseDTO {
+      return {
+        startsAt: freeTimeSchedule.startsAt,
+        endsAt: freeTimeSchedule.endsAt,
+        dayOfTheWeek: freeTimeSchedule.dayOfTheWeek
+      }
+    }
+
+  }
