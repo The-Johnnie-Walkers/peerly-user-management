@@ -6,7 +6,7 @@ import { Interest } from "../../domain/entities/interest.entity";
 import { Model } from "mongoose";
 import { UserMapper } from "../../infraestructure/adapters/out/persistence/mappers/user.mapper";
 
-export class InterestUseCaseImpl implements InterestRepositoryOutPort {
+export class InterestUseCasesImpl implements InterestRepositoryOutPort {
 
     constructor(
         private interestRepository: InterestRepository,

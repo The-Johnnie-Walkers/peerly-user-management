@@ -3,12 +3,12 @@ import { FreeTimeSchedule } from "../../entities/free-time-schedule.entity";
 
 export interface FreeTimeScheduleRepositoryOutPort{
 
-    create(freeTimeSchedule: FreeTimeSchedule): FreeTimeSchedule;
+    create(freeTimeSchedule: FreeTimeSchedule): Promise<FreeTimeSchedule>;
 
-    update(id: string, freeTimeSchedule: FreeTimeSchedule): FreeTimeSchedule;
+    update(id: string, freeTimeSchedule: FreeTimeSchedule): Promise<FreeTimeSchedule>;
 
     delete(id: string): void;
     
-    getById(id: string): FreeTimeSchedule;
+    getById(id: string): Promise<FreeTimeSchedule>;
 
 }

@@ -12,11 +12,11 @@ export class FreeTimeScheduleService implements CreateFreeTimeScheduleUseCase, U
         private freeTimeScheduleRepositoryOutPort: FreeTimeScheduleRepositoryOutPort
     ) {}
 
-    createFreeTimeSchedule(freeTimeSchedule: FreeTimeSchedule): FreeTimeSchedule {
+    createFreeTimeSchedule(freeTimeSchedule: FreeTimeSchedule): Promise<FreeTimeSchedule> {
         return this.freeTimeScheduleRepositoryOutPort.create(freeTimeSchedule);
     }
 
-    updateFreeTimeSchedule(id: string, freeTimeSchedule: FreeTimeSchedule): FreeTimeSchedule {
+    updateFreeTimeSchedule(id: string, freeTimeSchedule: FreeTimeSchedule): Promise<FreeTimeSchedule> {
         return this.freeTimeScheduleRepositoryOutPort.update(id, freeTimeSchedule);
     }
 
@@ -24,7 +24,7 @@ export class FreeTimeScheduleService implements CreateFreeTimeScheduleUseCase, U
         this.freeTimeScheduleRepositoryOutPort.delete(id);
     }
 
-    getFreeTimeScheduleById(id: string): FreeTimeSchedule {
+    getFreeTimeScheduleById(id: string): Promise<FreeTimeSchedule> {
         return this.getFreeTimeScheduleById(id);
     }
 }
