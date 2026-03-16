@@ -31,5 +31,4 @@ export class UserRepository {
         const result = await this.userModel.findByIdAndDelete(userId).exec();
         return result != null  ? true : false;
     }
-f
 }

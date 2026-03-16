@@ -4,7 +4,7 @@ import { InterestDocument, InterestSchema } from "../entities/interest.schema";
 import { Interest } from "src/modules/user/domain/entities/interest.entity";
 import mongoose from "mongoose";
 import { FreeTimeSchedule } from "src/modules/user/domain/entities/free-time-schedule.entity";
-import { FreeTimeScheduleSchema } from "../entities/free-time-schedule.schema";
+import { freeTimeScheduleDocument, FreeTimeScheduleSchema } from "../entities/free-time-schedule.schema";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
@@ -27,7 +27,7 @@ export class UserMapper{
             document.isVerified,
             document.createdAt,
             document.updatedAt,
-            document.freeTimeSchedule?.map(freetimeSchedule => this.freeTimeScheduleToDomain(freetimeSchedule)),
+            document.freeTimeSchedule as any,
             document.status,
             document.program
         );
@@ -72,8 +72,9 @@ export class UserMapper{
         } 
     }
 
-    freeTimeScheduleToDomain(freeTimeScheduleDocument: FreeTimeScheduleSchema): FreeTimeSchedule {
+    freeTimeScheduleToDomain(freeTimeScheduleDocument: freeTimeScheduleDocument): FreeTimeSchedule {
         return new FreeTimeSchedule(
+            freeTimeScheduleDocument._id.toString(),
             freeTimeScheduleDocument.startsAt,
             freeTimeScheduleDocument.endsAt,
             freeTimeScheduleDocument.dayOfTheWeek

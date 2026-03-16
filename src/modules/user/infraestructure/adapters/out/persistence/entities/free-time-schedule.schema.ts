@@ -1,5 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 import { DayOfTheWeek } from "src/modules/user/domain/enums/day-of-the-week.enum";
+
+export type freeTimeScheduleDocument = HydratedDocument<FreeTimeScheduleSchema>
 
 @Schema()
 export class FreeTimeScheduleSchema{
