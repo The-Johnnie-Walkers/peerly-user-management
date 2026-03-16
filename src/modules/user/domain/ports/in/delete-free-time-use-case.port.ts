@@ -1,6 +1,6 @@
 
 export interface DeleteFreeTimeScheduleUseCase {
 
-    deleteFreeTimeScheduleById(id: string): void;
+    deleteFreeTimeScheduleById(id: string): Promise<void>;
 
 }

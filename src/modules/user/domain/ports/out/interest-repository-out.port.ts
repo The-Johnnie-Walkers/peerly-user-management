@@ -6,7 +6,7 @@ export interface InterestRepositoryOutPort {
 
     update(id: string, interest: Interest): Promise<Interest>;
 
-    deleteById(id: string): void;
+    deleteById(id: string): Promise<void>;
 
     getById(id: string): Promise<Interest>;
 

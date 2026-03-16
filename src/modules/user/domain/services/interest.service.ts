@@ -12,23 +12,23 @@ export class InterestService implements CreateInterestUseCase, UpdateInterestUse
         private interestRepositoryOutPort: InterestRepositoryOutPort
     ){}
 
-    createInterest(interest: Interest): Promise<Interest> {
-        return this.interestRepositoryOutPort.create(interest);
+    async createInterest(interest: Interest): Promise<Interest> {
+        return await this.interestRepositoryOutPort.create(interest);
     }
 
-    updateInterest(id: string, interest: Interest): Promise<Interest> {
-        return this.interestRepositoryOutPort.update(id, interest);
+    async updateInterest(id: string, interest: Interest): Promise<Interest> {
+        return await this.interestRepositoryOutPort.update(id, interest);
     }
 
-    deleteInterestById(id: string): void {
-        this.interestRepositoryOutPort.deleteById(id);
+    async deleteInterestById(id: string): Promise<void> {
+        await this.interestRepositoryOutPort.deleteById(id);
     }
 
-    getInterestById(id: string): Promise<Interest> {
-        return this.interestRepositoryOutPort.getById(id);
+    async getInterestById(id: string): Promise<Interest> {
+        return await this.interestRepositoryOutPort.getById(id);
     }
 
-    getAllInterests(): Promise<Interest[]> {
-        return this.interestRepositoryOutPort.getAll();
+    async getAllInterests(): Promise<Interest[]> {
+        return await this.interestRepositoryOutPort.getAll();
     }
 }

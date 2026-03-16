@@ -14,24 +14,24 @@ export class UserService implements CreateUserUseCase, UpdateUserUseCase, Delete
     ){}
 
 
-    createUser(user: User): Promise<User> {
-        return this.userRepositoryOutPort.create(user);
+    async createUser(user: User): Promise<User> {
+        return await this.userRepositoryOutPort.create(user);
     }
 
-    updateUser(id: string, user: User): Promise<User> {
-        return this.userRepositoryOutPort.update(id, user);
+    async updateUser(id: string, user: User): Promise<User> {
+        return await this.userRepositoryOutPort.update(id, user);
     }
 
-    deleteUserById(id: string): void {
-        this.userRepositoryOutPort.deleteById(id);
+    async deleteUserById(id: string): Promise<void> {
+        await this.userRepositoryOutPort.deleteById(id);
     }
 
-    getUserById(id: string): Promise<User> {
-        return this.userRepositoryOutPort.getById(id);
+    async getUserById(id: string): Promise<User> {
+        return await this.userRepositoryOutPort.getById(id);
     }
 
-    getAllUsers(): Promise<User[]> {
-        return this.userRepositoryOutPort.getAll();
+    async getAllUsers(): Promise<User[]> {
+        return await this.userRepositoryOutPort.getAll();
     }
 
 }

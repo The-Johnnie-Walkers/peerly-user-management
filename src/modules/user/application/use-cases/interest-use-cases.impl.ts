@@ -48,12 +48,13 @@ export class InterestUseCasesImpl implements InterestRepositoryOutPort {
         return this.userMapper.interestToDomain(savedDocument);
     }
 
-    deleteById(id: string): void {
-        const actualInterest = this.interestRepository.findById(id);
+    async deleteById(id: string): Promise<void> {
+        const actualInterest = await this.interestRepository.findById(id);
 
         if(!actualInterest) throw new Error('The interest with id ${id} not found');
 
-        this.interestModel.findByIdAndDelete(id);
+        await this.interestModel.findByIdAndDelete(id);
+        return Promise.resolve();
     }
 
     async getById(id: string): Promise<Interest> {

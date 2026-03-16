@@ -49,12 +49,14 @@ export class FreeTimeScheduleUseCasesImpl implements FreeTimeScheduleRepositoryO
         return this.userMapper.freeTimeScheduleToDomain(savedDocument);
     }
 
-    delete(id: string): void {
-        const actualFreeTime = this.freeTimeScheduleRepository.findById(id);
+    async delete(id: string): Promise<void> {
+        const actualFreeTime = await this.freeTimeScheduleRepository.findById(id);
 
         if(!actualFreeTime) throw new Error('The free time with id ${id} was not found');
 
-        this.freeTimeScheduleModel.findByIdAndDelete(id);
+        await this.freeTimeScheduleModel.findByIdAndDelete(id);
+        return Promise.resolve();
+
     }
 
     async getById(id: string): Promise<FreeTimeSchedule> {

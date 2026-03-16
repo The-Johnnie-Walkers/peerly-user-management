@@ -7,7 +7,7 @@ export interface FreeTimeScheduleRepositoryOutPort{
 
     update(id: string, freeTimeSchedule: FreeTimeSchedule): Promise<FreeTimeSchedule>;
 
-    delete(id: string): void;
+    delete(id: string): Promise<void>;
     
     getById(id: string): Promise<FreeTimeSchedule>;
 

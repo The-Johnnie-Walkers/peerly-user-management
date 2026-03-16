@@ -75,13 +75,14 @@ export class UserUseCasesImpl implements UserRepositoryOutPort {
         return this.userMapper.toDomain(savedDocument);
     }
     
-    deleteById(id: string): void {
+    async deleteById(id: string): Promise<void> {
         
-        const actualUser = this.userRepository.findById(id);
+        const actualUser = await this.userRepository.findById(id);
 
         if(!actualUser) throw new Error('User with id ${id} not found');
 
-        this.userModel.findByIdAndDelete(id);
+        await this.userModel.findByIdAndDelete(id);
+        return Promise.resolve();
     }
 
     async getById(id: string): Promise<User> {
