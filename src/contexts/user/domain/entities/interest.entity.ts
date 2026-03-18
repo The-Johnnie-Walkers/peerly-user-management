@@ -1,5 +1,4 @@
 import { Category } from '../enums/category.enum'
-import { User } from './user.entity';
 
 export interface InterestProps {
     id: string;
