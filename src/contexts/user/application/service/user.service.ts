@@ -1,9 +1,9 @@
 import { User } from "../../domain/entities/user.entity";
-import { CreateUserUseCase } from "../../domain/ports/in/create-user-use-case.port";
+import { CreateUserUseCase } from "../../domain/ports/in/user/create-user-use-case.port";
 import { DeleteUserUseCase } from "../../domain/ports/in/user/delete-user-use-case.port";
-import { GetAllUsersUseCase } from "../../domain/ports/in/get-all-users-use-case.port";
-import { GetUserUseCase } from "../../domain/ports/in/get-user-use-case.port";
-import { UpdateUserUseCase } from "../../domain/ports/in/update-user-use-case.port";
+import { GetAllUsersUseCase } from "../../domain/ports/in/user/get-all-users-use-case.port";
+import { GetUserUseCase } from "../../domain/ports/in/user/get-user-use-case.port";
+import { UpdateUserUseCase } from "../../domain/ports/in/user/update-user-use-case.port";
 
 export class UserService implements CreateUserUseCase, UpdateUserUseCase, DeleteUserUseCase, GetUserUseCase, GetAllUsersUseCase {
 
