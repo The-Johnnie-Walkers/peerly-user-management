@@ -1,6 +1,6 @@
 import { User } from "../../domain/entities/user.entity";
 import { CreateUserUseCase } from "../../domain/ports/in/create-user-use-case.port";
-import { DeleteUserUseCase } from "../../domain/ports/in/delete-user-use-case.port";
+import { DeleteUserUseCase } from "../../domain/ports/in/user/delete-user-use-case.port";
 import { GetAllUsersUseCase } from "../../domain/ports/in/get-all-users-use-case.port";
 import { GetUserUseCase } from "../../domain/ports/in/get-user-use-case.port";
 import { UpdateUserUseCase } from "../../domain/ports/in/update-user-use-case.port";
@@ -13,7 +13,7 @@ export class UserService implements CreateUserUseCase, UpdateUserUseCase, Delete
     private deleteUserUseCase: DeleteUserUseCase,
     private getUserUseCase: GetUserUseCase,
     private getAllUsersUseCase: GetAllUsersUseCase
-  ) { }
+  ) {}
 
   createUser(user: User): Promise<User> {
     return this.createUserUseCase.createUser(user);
@@ -35,5 +35,4 @@ export class UserService implements CreateUserUseCase, UpdateUserUseCase, Delete
   getAllUsers(): Promise<User[]> {
     return this.getAllUsersUseCase.getAllUsers();
   }
-
 }

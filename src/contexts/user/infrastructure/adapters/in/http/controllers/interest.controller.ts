@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, Post, Put, Req } from "@nestjs/common";
 import { UserMapperApplication } from "src/contexts/user/application/mapper/user-mapper.application";
-import type { CreateInterestUseCase } from "src/contexts/user/domain/ports/in/create-interest-use-case.port";
-import type { DeleteInterestUseCase } from "src/contexts/user/domain/ports/in/delete-interest-use-case.port";
+import type { CreateInterestUseCase } from "src/contexts/user/domain/ports/in/interest/create-interest-use-case.port";
+import type { DeleteInterestUseCase } from "src/contexts/user/domain/ports/in/interest/delete-interest-use-case.port";
 import type { GetAllInterestsUseCase } from "src/contexts/user/domain/ports/in/get-all-interests-use-case.port";
 import type { GetInterestUseCase } from "src/contexts/user/domain/ports/in/get-interest-use.case.port";
 import type { UpdateInterestUseCase } from "src/contexts/user/domain/ports/in/update-interest-use-case.port";

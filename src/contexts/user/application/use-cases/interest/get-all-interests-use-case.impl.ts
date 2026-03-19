@@ -10,7 +10,5 @@ export class GetAllInterestsUseCaseImpl implements GetAllInterestsUseCase {
 
     getAllInterests(): Promise<Interest[]> {
         return this.interestRepositoryOutPort.findAll();
-    }
-    
-    
+    }  
 }

@@ -1,6 +1,6 @@
 import { Interest } from "../../domain/entities/interest.entity";
-import { CreateInterestUseCase } from "../../domain/ports/in/create-interest-use-case.port";
-import { DeleteInterestUseCase } from "../../domain/ports/in/delete-interest-use-case.port";
+import { CreateInterestUseCase } from "../../domain/ports/in/interest/create-interest-use-case.port";
+import { DeleteInterestUseCase } from "../../domain/ports/in/interest/delete-interest-use-case.port";
 import { GetAllInterestsUseCase } from "../../domain/ports/in/get-all-interests-use-case.port";
 import { GetInterestUseCase } from "../../domain/ports/in/get-interest-use.case.port";
 import { UpdateInterestUseCase } from "../../domain/ports/in/update-interest-use-case.port";
@@ -13,7 +13,7 @@ export class InterestService implements CreateInterestUseCase, UpdateInterestUse
     private deleteInterestUseCase: DeleteInterestUseCase,
     private getInterestUseCase: GetInterestUseCase,
     private getAllInterestsUseCase: GetAllInterestsUseCase
-  ) { }
+  ) {}
 
   createInterest(interest: Interest): Promise<Interest> {
     return this.createInterestUseCase.createInterest(interest);
@@ -35,5 +35,4 @@ export class InterestService implements CreateInterestUseCase, UpdateInterestUse
   getAllInterests(): Promise<Interest[]> {
     return this.getAllInterestsUseCase.getAllInterests();
   }
-
 }

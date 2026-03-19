@@ -1,6 +1,6 @@
 import { Controller, Post, Put, Delete, Req, Get } from "@nestjs/common";
 import type { CreateUserUseCase } from "src/contexts/user/domain/ports/in/create-user-use-case.port";
-import type { DeleteUserUseCase } from "src/contexts/user/domain/ports/in/delete-user-use-case.port";
+import type { DeleteUserUseCase } from "src/contexts/user/domain/ports/in/user/delete-user-use-case.port";
 import type { UpdateUserUseCase } from "src/contexts/user/domain/ports/in/update-user-use-case.port";
 import { UserResponseDTO } from "../dto/response/user-response.dto";
 import { UserRequestDTO } from "../dto/request/user-request.dto";
