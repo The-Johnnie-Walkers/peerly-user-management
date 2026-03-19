@@ -6,9 +6,9 @@ export interface UserRepositoryOutPort {
 
     update(id: string, user: User): Promise<User>;
 
-    findById( id: string ): Promise<User>;
-
     deleteById(id: string): Promise<void>;
+
+    findById( id: string ): Promise<User>;
 
     findAll(): Promise<User[]>;
     
