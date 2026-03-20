@@ -33,24 +33,43 @@ export class User {
     ) { }
 
     get id(): string { return this.props.id; }
+    set id(id: string) { this.props.id = id; }
     get username(): string { return this.props.username; }
+    set username(username: string) { this.props.username = username; }
     get name(): string { return this.props.name; }
+    set name(name: string) { this.props.name = name; }
     get lastname(): string { return this.props.lastname; }
+    set lastname(lastname: string) { this.props.lastname = lastname; }
     get email(): string { return this.props.email; }
+    set email(email: string) { this.props.email = email; }
     get description(): string | undefined { return this.props.description; }
+    set description(description: string | undefined) { this.props.description = description ?? ''; }
     get birthDate(): Date { return this.props.birthDate; }
+    set birthDate(birthDate: Date) { this.props.birthDate = birthDate; }
     get interests(): Interest[] | undefined { return this.props.interests; }
-    get profilePicURL(): string | undefined { return this.props.profilePicURL; }
+    set interests(interests: Interest[] | undefined) { this.props.interests = interests ?? []; }
+    get profilePicURL(): string | undefined { return this.props.profilePicURL ?? ''; }
+    set profilePicURL(profilePicURL: string | undefined) { this.props.profilePicURL = profilePicURL ?? ''; }
     get lastTimeConnected(): Date | undefined { return this.props.lastTimeConnected; }
+    set lastTimeConnected(lastTimeConnected: Date | undefined) { this.props.lastTimeConnected = lastTimeConnected; }
     get semester(): number { return this.props.semester; }
+    set semester(semester: number) { this.props.semester = semester; }
     get isOnline(): boolean { return this.props.isOnline; }
+    set isOnline(isOnline: boolean) { this.props.isOnline = isOnline; }
     get isVerified(): boolean { return this.props.isVerified; }
+    set isVerified(isVerified: boolean) { this.props.isVerified = isVerified; }
     get createdAt(): Date { return this.props.createdAt; }
+    set createdAt(createdAt: Date) { this.props.createdAt = createdAt; }
     get updatedAt(): Date { return this.props.updatedAt; }
+    set updatedAt(updatedAt: Date) { this.props.updatedAt = updatedAt; }
     get freeTimeSchedule(): FreeTimeSchedule[] | undefined { return this.props.freeTimeSchedule; }
+    set freeTimeSchedule(freeTimeSchedule: FreeTimeSchedule[] | undefined) { this.props.freeTimeSchedule = freeTimeSchedule ?? []; }
     get status(): Status { return this.props.status; }
+    set status(status: Status) { this.props.status = status; }
     get programs(): Program[] { return this.props.programs; }
+    set programs(programs: Program[]) { this.props.programs = programs; }
     get role(): UserRole { return this.props.role; }
+    set role(role: UserRole) { this.props.role = role; }
 
     validateAge() {
         const age = new Date().getFullYear() - this.props.birthDate.getFullYear();

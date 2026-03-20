@@ -15,7 +15,7 @@ export class UserSchema {
     username: string;
 
     @Prop({ required: true })
-    name: string; 
+    name: string;
 
     @Prop({ required: true })
     lastname: string;
@@ -28,25 +28,25 @@ export class UserSchema {
 
     @Prop({ required: true })
     birthDate: Date;
-    
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Interest' }], default: []})
+
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Interest' }], default: [] })
     interests: mongoose.Types.ObjectId[];
-    
+
     @Prop()
     profilePicURL: string;
-    
+
     @Prop()
     lastTimeConnected: Date;
-    
+
     @Prop({ required: true })
     semester: number;
-    
+
     @Prop({ required: true })
     isOnline: boolean;
-    
+
     @Prop({ required: true })
     isVerified: boolean;
-    
+
     @Prop({ required: true })
     createdAt: Date;
 
@@ -55,14 +55,14 @@ export class UserSchema {
 
     @Prop({ type: [FreeTimeScheduleSchema], default: [] })
     freeTimeSchedule: FreeTimeScheduleSchema[];
-    
+
     @Prop({ required: true })
     status: Status;
-    
+
     @Prop({ required: true })
     programs: Program[];
 
-    @Prop({ required: true})
+    @Prop({ required: true })
     role: UserRole;
 }
 
