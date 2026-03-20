@@ -90,5 +90,4 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
     async findAll(): Promise<User[]> {
         return await this.userRepository.findAll();
     }
-
 }
