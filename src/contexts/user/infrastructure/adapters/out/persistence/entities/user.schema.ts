@@ -4,13 +4,14 @@ import { Status } from '../../../../../domain/enums/status.enum'
 import { Program } from '../../../../../domain/enums/program.enum'
 import { FreeTimeScheduleSchema } from './free-time-schedule.schema';
 import * as mongoose from 'mongoose';
+import { UserRole } from 'src/contexts/user/domain/enums/user-role.enum';
 
 export type UserDocument = HydratedDocument<UserSchema>;
 
-@Schema({ timestamps: true })
+@Schema()
 export class UserSchema {
 
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true })
     username: string;
 
     @Prop({ required: true })
@@ -40,14 +41,16 @@ export class UserSchema {
     @Prop({ required: true })
     semester: number;
     
-    @Prop({ required: false })
+    @Prop({ required: true })
     isOnline: boolean;
     
-    @Prop({ required: false })
+    @Prop({ required: true })
     isVerified: boolean;
     
+    @Prop({ required: true })
     createdAt: Date;
 
+    @Prop({ required: true })
     updatedAt: Date;
 
     @Prop({ type: [FreeTimeScheduleSchema], default: [] })
@@ -57,7 +60,10 @@ export class UserSchema {
     status: Status;
     
     @Prop({ required: true })
-    program: Program;
+    programs: Program[];
+
+    @Prop({ required: true})
+    role: UserRole;
 }
 
 export const UserSchemaDefinition = SchemaFactory.createForClass(UserSchema);

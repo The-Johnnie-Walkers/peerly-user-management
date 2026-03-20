@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { Category } from 'src/contexts/user/domain/enums/category.enum';
-import * as mongoose from 'mongoose';
-
 
 export type InterestDocument = HydratedDocument<InterestSchema>
 
@@ -14,11 +12,6 @@ export class InterestSchema {
 
     @Prop({ required: true })
     category: Category;
-
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], default: [] })
-    users: mongoose.Types.ObjectId[];
-
-
 }
 
 export const InterestSchemaDefinition = SchemaFactory.createForClass(InterestSchema);

@@ -32,6 +32,26 @@ export class User {
         private props: UserProps
     ) { }
 
+    get id(): string { return this.props.id; }
+    get username(): string { return this.props.username; }
+    get name(): string { return this.props.name; }
+    get lastname(): string { return this.props.lastname; }
+    get email(): string { return this.props.email; }
+    get description(): string | undefined { return this.props.description; }
+    get birthDate(): Date { return this.props.birthDate; }
+    get interests(): Interest[] | undefined { return this.props.interests; }
+    get profilePicURL(): string | undefined { return this.props.profilePicURL; }
+    get lastTimeConnected(): Date | undefined { return this.props.lastTimeConnected; }
+    get semester(): number { return this.props.semester; }
+    get isOnline(): boolean { return this.props.isOnline; }
+    get isVerified(): boolean { return this.props.isVerified; }
+    get createdAt(): Date { return this.props.createdAt; }
+    get updatedAt(): Date { return this.props.updatedAt; }
+    get freeTimeSchedule(): FreeTimeSchedule[] | undefined { return this.props.freeTimeSchedule; }
+    get status(): Status { return this.props.status; }
+    get programs(): Program[] { return this.props.programs; }
+    get role(): UserRole { return this.props.role; }
+
     validateAge() {
         const age = new Date().getFullYear() - this.props.birthDate.getFullYear();
 
@@ -108,20 +128,20 @@ export class User {
         this.props.freeTimeSchedule.splice(this.props.freeTimeSchedule.indexOf(freeTimeSchedule), 1);
     }
 
-    addProgram( newProgram: Program): void {
-        if(this.props.programs.length >= 2) throw new Error('The user only can have maximum 2 programs'); 
-        if(!this.props.programs) this.props.programs = [];
-        if(this.props.programs.find(program => program === newProgram)) throw new Error('The user already have the program')
+    addProgram(newProgram: Program): void {
+        if (this.props.programs.length >= 2) throw new Error('The user only can have maximum 2 programs');
+        if (!this.props.programs) this.props.programs = [];
+        if (this.props.programs.find(program => program === newProgram)) throw new Error('The user already have the program')
 
         this.props.programs.push(newProgram);
     }
 
-    delete( deletedProgram: Program): void {
-        if(!this.props.programs || this.props.programs.length == 0) throw Error('The user dont have programs');
+    delete(deletedProgram: Program): void {
+        if (!this.props.programs || this.props.programs.length == 0) throw Error('The user dont have programs');
 
         const program = this.props.programs.find(p => p === deletedProgram);
 
-        if(!program) throw new Error('Program not found');
+        if (!program) throw new Error('Program not found');
 
         this.props.programs.splice(this.props.programs.indexOf(program), 1);
     }

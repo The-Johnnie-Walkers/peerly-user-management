@@ -1,36 +1,37 @@
 import { User } from "src/contexts/user/domain/entities/user.entity";
 import { UserDocument, UserSchema } from "../entities/user.schema";
 import { InterestDocument, InterestSchema } from "../entities/interest.schema";
+import { FreeTimeScheduleDocument, FreeTimeScheduleSchema } from "../entities/free-time-schedule.schema";
 import { Interest } from "src/contexts/user/domain/entities/interest.entity";
 import mongoose from "mongoose";
-import { FreeTimeSchedule } from "src/contexts/user/domain/entities/free-time-schedule.entity";
-import { freeTimeScheduleDocument, FreeTimeScheduleSchema } from "../entities/free-time-schedule.schema";
 import { Injectable } from "@nestjs/common";
+import { FreeTimeSchedule } from "src/contexts/user/domain/entities/free-time-schedule.entity";
 
 @Injectable()
 export class UserMapper {
 
     toDomain(document: UserDocument): User {
-        return new User(
-            document._id.toString(),
-            document.username,
-            document.name,
-            document.lastname,
-            document.email,
-            document.description,
-            document.birthDate,
-            document.interests as any,
-            document.profilePicURL,
-            document.lastTimeConnected,
-            document.semester,
-            document.isOnline,
-            document.isVerified,
-            document.createdAt,
-            document.updatedAt,
-            document.freeTimeSchedule as any,
-            document.status,
-            document.program
-        );
+        return new User({
+            id: document._id.toString(),
+            username: document.username,
+            name: document.name,
+            lastname: document.lastname,
+            email: document.email,
+            description: document.description,
+            birthDate: document.birthDate,
+            interests: document.interests ? (document.interests as unknown as InterestDocument[]).map(interest => this.interestToDomain(interest)) : undefined,
+            profilePicURL: document.profilePicURL,
+            lastTimeConnected: document.lastTimeConnected,
+            semester: document.semester,
+            isOnline: document.isOnline,
+            isVerified: document.isVerified,
+            createdAt: document.createdAt,
+            updatedAt: document.updatedAt,
+            freeTimeSchedule: document.freeTimeSchedule ? (document.freeTimeSchedule as unknown as FreeTimeScheduleDocument[]).map(freeTimeSchedule => this.freeTimeScheduleToDomain(freeTimeSchedule)) : undefined,
+            status: document.status,
+            programs: document.programs,
+            role: document.role
+        })
     }
 
     toDocument(entity: User): Partial<UserSchema> {
@@ -41,7 +42,7 @@ export class UserMapper {
             email: entity.email,
             description: entity.description,
             birthDate: entity.birthDate,
-            interests: entity.interests as any,
+            interests: entity.interests ? entity.interests.map(interest => new mongoose.Types.ObjectId(interest.id)) : undefined,
             profilePicURL: entity.profilePicURL,
             lastTimeConnected: entity.lastTimeConnected,
             semester: entity.semester,
@@ -49,39 +50,38 @@ export class UserMapper {
             isVerified: entity.isVerified,
             createdAt: entity.createdAt,
             updatedAt: entity.updatedAt,
-            freeTimeSchedule: entity.freeTimeSchedule.map(freeTimeSchedule => this.freeTimeScheduleToDocument(freeTimeSchedule)),
+            freeTimeSchedule: entity.freeTimeSchedule,
             status: entity.status,
-            program: entity.program
+            programs: entity.programs,
+            role: entity.role
         }
     }
 
     interestToDomain(interestDocument: InterestDocument): Interest {
-        return new Interest(
-            interestDocument._id.toString(),
-            interestDocument.name,
-            interestDocument.category,
-            interestDocument.users as any
-        );
+        return new Interest({
+            id: interestDocument._id.toString(),
+            name: interestDocument.name,
+            category: interestDocument.category
+        })
     }
 
-    interestToDocument(interestEntity: Interest, usersIds?: string[]): Partial<InterestSchema> {
+    interestToDocument(interestEntity: Interest): Partial<InterestSchema> {
         return {
             name: interestEntity.name,
             category: interestEntity.category,
-            users: usersIds?.map(id => new mongoose.Types.ObjectId(id)) || []
         }
     }
 
-    freeTimeScheduleToDomain(freeTimeScheduleDocument: freeTimeScheduleDocument): FreeTimeSchedule {
-        return new FreeTimeSchedule(
-            freeTimeScheduleDocument._id.toString(),
-            freeTimeScheduleDocument.startsAt,
-            freeTimeScheduleDocument.endsAt,
-            freeTimeScheduleDocument.dayOfTheWeek
-        );
+    freeTimeScheduleToDomain(freeTimeScheduleDocument: FreeTimeScheduleDocument): FreeTimeSchedule {
+        return new FreeTimeSchedule({
+            id: freeTimeScheduleDocument._id.toString(),
+            startsAt: freeTimeScheduleDocument.startsAt,
+            endsAt: freeTimeScheduleDocument.endsAt,
+            dayOfTheWeek: freeTimeScheduleDocument.dayOfTheWeek
+        })
     }
 
-    freeTimeScheduleToDocument(freeTimeScheduleEntity: FreeTimeSchedule): FreeTimeScheduleSchema {
+    freeTimeScheduleToDocument(freeTimeScheduleEntity: FreeTimeSchedule): Partial<FreeTimeScheduleSchema> {
         return {
             startsAt: freeTimeScheduleEntity.startsAt,
             endsAt: freeTimeScheduleEntity.endsAt,
