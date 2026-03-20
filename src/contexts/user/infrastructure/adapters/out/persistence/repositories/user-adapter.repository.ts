@@ -5,7 +5,6 @@ import { UserMapper } from "../mappers/user.mapper";
 import { UserDocument, UserSchema } from "../entities/user.schema";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
-import { FreeTimeSchedule } from "src/contexts/user/domain/entities/free-time-schedule.entity";
 
 
 export class UserRepositoryAdapter implements UserRepositoryOutPort {
