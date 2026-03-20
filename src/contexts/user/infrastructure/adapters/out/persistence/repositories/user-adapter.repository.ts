@@ -82,11 +82,13 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
         await this.userRepository.deleteById(id);
         return Promise.resolve();
     }
+
     async findById(id: string): Promise<User> {
         const user = await this.userRepository.findById(id);
         if (!user) throw new Error(`User with id ${id} not found`);
         return user;
     }
+
     async findAll(): Promise<User[]> {
         return await this.userRepository.findAll();
     }
