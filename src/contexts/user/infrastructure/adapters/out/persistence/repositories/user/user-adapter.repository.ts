@@ -1,8 +1,8 @@
 import { User } from "src/contexts/user/domain/entities/user.entity";
 import { UserRepositoryOutPort } from "src/contexts/user/domain/ports/out/user-repository-out.port";
 import { UserRepository } from "./user.repository";
-import { UserMapper } from "../mappers/user.mapper";
-import { UserDocument, UserSchema } from "../entities/user.schema";
+import { UserMapper } from "../../mappers/user.mapper";
+import { UserDocument, UserSchema } from "../../entities/user.schema";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 
