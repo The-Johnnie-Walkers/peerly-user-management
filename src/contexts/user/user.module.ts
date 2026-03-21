@@ -8,6 +8,11 @@ import { UserMapper } from './infrastructure/adapters/out/persistence/mappers/us
 import { UserRepository } from './infrastructure/adapters/out/persistence/repositories/user/user.repository';
 import { InterestRepository } from './infrastructure/adapters/out/persistence/repositories/interest/interest.repository';
 import { UserController } from './infrastructure/adapters/in/http/controllers/user.controller';
+import { InterestController } from './infrastructure/adapters/in/http/controllers/interest.controller';
+import { UserService } from './application/service/user.service';
+import { InterestService } from './application/service/interest.service';
+import { UserDtoMapper } from './infrastructure/adapters/in/http/mapper/user-dto.mapper';
+import { InterestDtoMapper } from './infrastructure/adapters/in/http/mapper/interest-dto.mapper';
 
 @Module({
     imports: [
@@ -19,15 +24,15 @@ import { UserController } from './infrastructure/adapters/in/http/controllers/us
     providers: [
         UserMapper,
         UserRepository,
-        InterestRepository
+        InterestRepository,
+        UserService,
+        InterestService,
+        UserDtoMapper,
+        InterestDtoMapper
     ],
-
-    exports: [
-
-    ],
-
     controllers: [
-        UserController
+        UserController,
+        InterestController
     ],
 })
 export class UserModule {
