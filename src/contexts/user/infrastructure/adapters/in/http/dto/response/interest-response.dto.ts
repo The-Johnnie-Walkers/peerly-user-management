@@ -1,10 +1,7 @@
-import { Category } from "src/contexts/user/domain/enums/category.enum";
-
+import { Category } from 'src/contexts/user/domain/enums/category.enum';
 
 export class InterestResponseDTO {
+  name: string;
 
-    name: string;
-
-    category: Category;
-
+  category: Category;
 }

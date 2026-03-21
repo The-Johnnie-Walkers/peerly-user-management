@@ -1,14 +1,11 @@
-import { Interest } from "src/contexts/user/domain/entities/interest.entity";
-import { GetInterestUseCase } from "src/contexts/user/domain/ports/in/interest/get-interest-use.case.port";
-import { InterestRepositoryOutPort } from "src/contexts/user/domain/ports/out/interest-repository-out.port";
+import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
+import { GetInterestUseCase } from 'src/contexts/user/domain/ports/in/interest/get-interest-use.case.port';
+import { InterestRepositoryOutPort } from 'src/contexts/user/domain/ports/out/interest-repository-out.port';
 
 export class GetInterestUseCaseImpl implements GetInterestUseCase {
-    
-    constructor(
-        private interestRepositoryOutPort: InterestRepositoryOutPort
-    ){}
+  constructor(private interestRepositoryOutPort: InterestRepositoryOutPort) {}
 
-    getInterestById(id: string): Promise<Interest> {
-        return this.interestRepositoryOutPort.findById(id);
-    }  
+  async getInterestById(id: string): Promise<Interest> {
+    return await this.interestRepositoryOutPort.findById(id);
+  }
 }

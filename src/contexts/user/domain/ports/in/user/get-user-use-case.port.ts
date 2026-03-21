@@ -1,7 +1,5 @@
-import { User } from "../../../entities/user.entity";
+import { User } from '../../../entities/user.entity';
 
 export interface GetUserUseCase {
-
-    getUserById(id: string): Promise<User>;
-
+  getUserById(id: string): Promise<User>;
 }

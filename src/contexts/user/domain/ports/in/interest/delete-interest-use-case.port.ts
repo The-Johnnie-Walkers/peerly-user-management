@@ -1,5 +1,3 @@
 export interface DeleteInterestUseCase {
-
-    deleteInterestById(id: string): Promise<void>;
-
+  deleteInterestById(id: string): Promise<void>;
 }

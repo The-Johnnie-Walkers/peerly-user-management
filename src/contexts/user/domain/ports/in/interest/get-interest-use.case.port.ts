@@ -1,7 +1,5 @@
-import { Interest } from "../../../entities/interest.entity";
+import { Interest } from '../../../entities/interest.entity';
 
 export interface GetInterestUseCase {
-
-    getInterestById(id: string): Promise<Interest>;
-    
+  getInterestById(id: string): Promise<Interest>;
 }

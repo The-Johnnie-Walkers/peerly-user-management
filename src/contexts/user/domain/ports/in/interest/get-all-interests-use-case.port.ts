@@ -1,7 +1,5 @@
-import { Interest } from "../../../entities/interest.entity";
+import { Interest } from '../../../entities/interest.entity';
 
 export interface GetAllInterestsUseCase {
-
-    getAllInterests(): Promise<Interest[]>;
-
+  getAllInterests(): Promise<Interest[]>;
 }

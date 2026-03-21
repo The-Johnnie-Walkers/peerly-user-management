@@ -1,39 +1,38 @@
-import { FreeTimeSchedule } from "src/contexts/user/domain/entities/free-time-schedule.entity";
-import { Interest } from "src/contexts/user/domain/entities/interest.entity";
-import { Program } from "src/contexts/user/domain/enums/program.enum";
-import { Status } from "src/contexts/user/domain/enums/status.enum";
+import { FreeTimeSchedule } from 'src/contexts/user/domain/entities/free-time-schedule.entity';
+import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
+import { Program } from 'src/contexts/user/domain/enums/program.enum';
+import { Status } from 'src/contexts/user/domain/enums/status.enum';
 
 export class UserResponseDTO {
+  username: string;
 
-    username: string;
+  name: string;
 
-    name: string;
+  lastname: string;
 
-    lastname: string;
+  email: string;
 
-    email: string;
+  description?: string;
 
-    description?: string;
+  interests?: Interest[];
 
-    interests?: Interest[];
+  profilePicURL?: string;
 
-    profilePicURL?: string;
+  lastTimeConnected: Date;
 
-    lastTimeConnected: Date;
+  semester: number;
 
-    semester: number;
+  isOnline: boolean;
 
-    isOnline: boolean;
+  isVerified: boolean;
 
-    isVerified: boolean;
+  createdAt: Date;
 
-    createdAt: Date;
+  updatedAt: Date;
 
-    updatedAt: Date;
+  freeTimeSchedule?: FreeTimeSchedule[];
 
-    freeTimeSchedule?: FreeTimeSchedule[]
+  status: Status;
 
-    status: Status;
-
-    programs: Program[];
+  programs: Program[];
 }
