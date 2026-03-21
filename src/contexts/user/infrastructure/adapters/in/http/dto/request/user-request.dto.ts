@@ -3,6 +3,7 @@ import { FreeTimeSchedule } from 'src/contexts/user/domain/entities/free-time-sc
 import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
 import { Program } from 'src/contexts/user/domain/enums/program.enum';
 import { Status } from 'src/contexts/user/domain/enums/status.enum';
+import { UserRole } from 'src/contexts/user/domain/enums/user-role.enum';
 
 export class UserRequestDTO {
 
@@ -24,19 +25,25 @@ export class UserRequestDTO {
     @IsNotEmpty()
     birthDate: Date;
 
+    @IsOptional()
     interests: Interest[];
 
+    @IsOptional()
     profilePicURL: string;
 
     @IsNumber()
     semester: number;
 
+    @IsOptional()
     freeTimeSchedule: FreeTimeSchedule[]
 
     @IsEnum(Status)
     status: Status;
 
     @IsEnum(Program)
-    program: Program;
+    programs: Program[];
+
+    @IsEnum(UserRole)
+    role: UserRole;
 
 }

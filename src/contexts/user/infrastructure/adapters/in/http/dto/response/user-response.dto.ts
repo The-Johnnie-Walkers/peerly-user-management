@@ -13,11 +13,11 @@ export class UserResponseDTO {
 
     email: string;
 
-    description: string;
+    description?: string;
 
-    interests: Interest[];
+    interests?: Interest[];
 
-    profilePicURL: string;
+    profilePicURL?: string;
 
     lastTimeConnected: Date;
 
@@ -31,9 +31,9 @@ export class UserResponseDTO {
 
     updatedAt: Date;
 
-    freeTimeSchedule: FreeTimeSchedule[]
+    freeTimeSchedule?: FreeTimeSchedule[]
 
     status: Status;
 
-    program: Program;
+    programs: Program[];
 }
