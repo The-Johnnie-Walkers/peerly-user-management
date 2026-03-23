@@ -22,6 +22,7 @@ import { UpdateUserUseCaseImpl } from './application/use-cases/user/update-user-
 import { CreateInterestUseCaseImpl } from './application/use-cases/interest/create-interest-use-case.impl';
 import { DeleteInterestUseCaseImpl } from './application/use-cases/interest/delete-interest-use-case.impl';
 import { GetInterestUseCaseImpl } from './application/use-cases/interest/get-interest-use-case.impl';
+import { GetAllInterestsUseCaseImpl } from './application/use-cases/interest/get-all-interests-use-case.impl';
 
 @Module({
   imports: [
@@ -38,17 +39,55 @@ import { GetInterestUseCaseImpl } from './application/use-cases/interest/get-int
     InterestService,
     UserDtoMapper,
     InterestDtoMapper,
-    CreateUserUseCaseImpl,
-    UpdateInterestUseCaseImpl,
-    DeleteUserUseCaseImpl,
-    GetUserUseCaseImpl,
-    GetAllUsersUseCaseImpl,
-    UpdateUserUseCaseImpl,
-    CreateInterestUseCaseImpl,
-    DeleteInterestUseCaseImpl,
-    GetInterestUseCaseImpl,
-    GetAllUsersUseCaseImpl,
+    {
+      provide: 'CreateUserUseCaseToken',
+      useClass: CreateUserUseCaseImpl,
+    },
+    {
+      provide: 'DeleteUserUseCaseToken',
+      useClass: DeleteUserUseCaseImpl,
+    },
+    {
+      provide: 'GetUserUseCaseToken',
+      useClass: GetUserUseCaseImpl,
+    },
+    {
+      provide: 'GetAllUsersUseCaseToken',
+      useClass: GetAllUsersUseCaseImpl,
+    },
+    {
+      provide: 'UpdateUserUseCaseToken',
+      useClass: UpdateUserUseCaseImpl,
+    },
+    {
+      provide: 'CreateInterestUseCaseToken',
+      useClass: CreateInterestUseCaseImpl,
+    },
+    {
+      provide: 'UpdateInterestUseCaseToken',
+      useClass: UpdateInterestUseCaseImpl,
+    },
+    {
+      provide: 'DeleteInterestUseCaseToken',
+      useClass: DeleteInterestUseCaseImpl,
+    },
+    {
+      provide: 'GetInterestUseCaseToken',
+      useClass: GetInterestUseCaseImpl,
+    },
+    {
+      provide: 'GetAllInterestsUseCaseToken',
+      useClass: GetAllInterestsUseCaseImpl,
+    },
+    {
+      provide: 'InterestRepositoryOutPortToken',
+      useClass: InterestRepository,
+    },
+    {
+      provide: 'UserRepositoryOutPortToken',
+      useClass: UserRepository,
+    }
   ],
   controllers: [UserController, InterestController],
 })
-export class UserModule {}
+export class UserModule { }
