@@ -14,7 +14,7 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
     private userMapper: UserMapper,
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
-  ) {}
+  ) { }
 
   async save(user: User): Promise<User> {
     const UserDocument: Partial<UserSchema> = {
@@ -67,7 +67,7 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
     actualUser.role = user.role;
 
     const updatedDocument = this.userMapper.toDocument(actualUser);
-    const savedDocument = await this.userModel.findByIdAndUpdate(id, updatedDocument, { new: true }).exec();
+    const savedDocument = await this.userModel.findByIdAndUpdate(id, updatedDocument, { returnDocument: 'after' }).exec();
 
     if (!savedDocument)
       throw new Error(`User with id ${id} could not be updated`);

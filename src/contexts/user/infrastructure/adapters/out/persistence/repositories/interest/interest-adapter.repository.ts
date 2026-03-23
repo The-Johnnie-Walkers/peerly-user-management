@@ -3,7 +3,7 @@ import { InterestRepositoryOutPort } from 'src/contexts/user/domain/ports/out/in
 import { InterestRepository } from './interest.repository';
 import { UserMapper } from '../../mappers/user.mapper';
 import { InjectModel } from '@nestjs/mongoose';
-import {InterestDocument, InterestSchema } from '../../entities/interest.schema';
+import { InterestDocument, InterestSchema } from '../../entities/interest.schema';
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 
@@ -14,7 +14,7 @@ export class InterestRepositoryAdapter implements InterestRepositoryOutPort {
     private userMapper: UserMapper,
     @InjectModel(Interest.name)
     private interestModel: Model<InterestDocument>,
-  ) {}
+  ) { }
 
   async save(interest: Interest): Promise<Interest> {
     const InterestDocument: Partial<InterestSchema> = {
@@ -35,7 +35,7 @@ export class InterestRepositoryAdapter implements InterestRepositoryOutPort {
     actualInterest.category = interest.category;
 
     const updatedDocument = this.userMapper.interestToDocument(actualInterest);
-    const savedDocument = await this.interestModel.findByIdAndUpdate(id, updatedDocument, { new: true }).exec();
+    const savedDocument = await this.interestModel.findByIdAndUpdate(id, updatedDocument, { returnDocument: 'after' }).exec();
 
     if (!savedDocument)
       throw new Error(`Interest with id ${id} could not be updated`);

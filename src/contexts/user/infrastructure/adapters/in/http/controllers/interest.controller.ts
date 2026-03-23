@@ -9,7 +9,7 @@ export class InterestController {
   constructor(
     private interestService: InterestService,
     private interestDtoMapper: InterestDtoMapper,
-  ) {}
+  ) { }
 
   @Post('')
   async createInterest(@Body() interestRequest: InterestRequestDTO): Promise<InterestRequestDTO> {
@@ -18,20 +18,20 @@ export class InterestController {
     return this.interestDtoMapper.toResponse(createInterest);
   }
 
-  @Put('/{id}')
+  @Put('/{:id}')
   async updateInterest(@Param('id') id: string, @Body() interestRequest: InterestRequestDTO): Promise<InterestResponseDTO> {
     const interest = this.interestDtoMapper.toDomain(interestRequest);
     const updatedInterest = await this.interestService.updateInterest(id, interest);
     return this.interestDtoMapper.toResponse(updatedInterest);
   }
 
-  @Delete('/{id}')
+  @Delete('/{:id}')
   async deleteInterest(@Param('id') id: string): Promise<void> {
     await this.interestService.deleteInterestById(id);
     return Promise.resolve();
   }
 
-  @Get('/{id}')
+  @Get('/{:id}')
   async getInterestById(@Param('id') id: string): Promise<InterestResponseDTO> {
     const interest = await this.interestService.getInterestById(id);
     return this.interestDtoMapper.toResponse(interest);

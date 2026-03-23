@@ -23,6 +23,8 @@ import { CreateInterestUseCaseImpl } from './application/use-cases/interest/crea
 import { DeleteInterestUseCaseImpl } from './application/use-cases/interest/delete-interest-use-case.impl';
 import { GetInterestUseCaseImpl } from './application/use-cases/interest/get-interest-use-case.impl';
 import { GetAllInterestsUseCaseImpl } from './application/use-cases/interest/get-all-interests-use-case.impl';
+import { InterestRepositoryAdapter } from './infrastructure/adapters/out/persistence/repositories/interest/interest-adapter.repository';
+import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence/repositories/user/user-adapter.repository';
 
 @Module({
   imports: [
@@ -81,11 +83,11 @@ import { GetAllInterestsUseCaseImpl } from './application/use-cases/interest/get
     },
     {
       provide: 'InterestRepositoryOutPortToken',
-      useClass: InterestRepository,
+      useClass: InterestRepositoryAdapter,
     },
     {
       provide: 'UserRepositoryOutPortToken',
-      useClass: UserRepository,
+      useClass: UserRepositoryAdapter,
     }
   ],
   controllers: [UserController, InterestController],

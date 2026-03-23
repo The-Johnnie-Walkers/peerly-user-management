@@ -9,7 +9,7 @@ export class UserController {
   constructor(
     private userService: UserService,
     private userDtoMapper: UserDtoMapper,
-  ) {}
+  ) { }
 
   @Post('')
   async createUser(@Body() userRequest: UserRequestDTO): Promise<UserResponseDTO> {
@@ -18,20 +18,20 @@ export class UserController {
     return this.userDtoMapper.toResponse(createUser);
   }
 
-  @Put('/{id}')
+  @Put('/{:id}')
   async updateUser(@Param('id') id: string, @Body() userRequest: UserRequestDTO): Promise<UserResponseDTO> {
     const user = this.userDtoMapper.toDomain(userRequest);
     const userUpdated = await this.userService.updateUser(id, user);
     return this.userDtoMapper.toResponse(userUpdated);
   }
 
-  @Delete('/{id}')
+  @Delete('/{:id}')
   async deleteUser(@Param('id') id: string): Promise<void> {
     await this.userService.deleteUserById(id);
     return Promise.resolve();
   }
 
-  @Get('/{id}')
+  @Get('/{:id}')
   async getUserById(@Param('id') id: string): Promise<UserResponseDTO> {
     const user = await this.userService.getUserById(id);
     return this.userDtoMapper.toResponse(user);
