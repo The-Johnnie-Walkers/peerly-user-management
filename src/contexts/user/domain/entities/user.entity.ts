@@ -27,7 +27,7 @@ export interface UserProps {
 }
 
 export class User {
-  constructor(private props: UserProps) {}
+  constructor(private props: UserProps) { }
 
   get id(): string {
     return this.props.id;
@@ -145,7 +145,7 @@ export class User {
   }
 
   validateAge() {
-    const age = new Date().getFullYear() - this.props.birthDate.getFullYear();
+    const age = new Date().getFullYear() - new Date(this.props.birthDate).getFullYear();
 
     if (age < 18) {
       throw new Error('User must be at least 18 years old');
@@ -190,39 +190,6 @@ export class User {
     }
 
     this.props.freeTimeSchedule.push(newFreeTimeSchedule);
-  }
-
-  updateFreeTimeSchedule(freeTimeScheduleToUpdate: FreeTimeSchedule): void {
-    if (!this.props.freeTimeSchedule || this.props.freeTimeSchedule == null) {
-      throw new Error('The user dont have free time schedules');
-    }
-
-    const freeTimeSchedule = this.props.freeTimeSchedule.find(
-      (freeTimeSchedule) => freeTimeSchedule.id === freeTimeScheduleToUpdate.id,
-    );
-
-    if (!freeTimeSchedule) {
-      throw new Error('Free time schedule not found');
-    }
-
-    if (freeTimeScheduleToUpdate.startsAt >= freeTimeScheduleToUpdate.endsAt) {
-      throw new Error('Invalid free time schedule');
-    }
-
-    if (
-      this.props.freeTimeSchedule.some(
-        (ft) =>
-          ft.dayOfTheWeek == freeTimeScheduleToUpdate.dayOfTheWeek &&
-          freeTimeSchedule.startsAt.getTime() < ft.endsAt.getTime() &&
-          freeTimeSchedule.endsAt.getTime() > ft.startsAt.getTime(),
-      )
-    ) {
-      throw new Error('Free time choosed, overlaps with an existant one');
-    }
-
-    freeTimeSchedule.startsAt = freeTimeScheduleToUpdate.startsAt;
-    freeTimeSchedule.endsAt = freeTimeScheduleToUpdate.endsAt;
-    freeTimeSchedule.dayOfTheWeek = freeTimeScheduleToUpdate.dayOfTheWeek;
   }
 
   removeFreeTimeSchedule(freeTimeScheduleToDelete: FreeTimeSchedule): void {
