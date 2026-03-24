@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { IsArray, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 import { FreeTimeSchedule } from 'src/contexts/user/domain/entities/free-time-schedule.entity';
 import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
 import { Program } from 'src/contexts/user/domain/enums/program.enum';
@@ -39,7 +39,7 @@ export class UserRequestDTO {
   @IsEnum(Status)
   status: Status;
 
-  @IsEnum(Program)
+  @IsEnum(Program, { each: true })
   programs: Program[];
 
   @IsEnum(UserRole)

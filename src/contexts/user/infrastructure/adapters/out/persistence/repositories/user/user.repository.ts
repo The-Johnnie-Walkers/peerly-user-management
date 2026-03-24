@@ -10,26 +10,20 @@ export class UserRepository {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private userMapper: UserMapper,
-  ) {}
+  ) { }
 
   async findAll(): Promise<User[]> {
-    const documents = await this.userModel.find().populate('Interest').exec();
+    const documents = await this.userModel.find().populate('interests').exec();
     return documents.map((doc) => this.userMapper.toDomain(doc));
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const document = await this.userModel
-      .findOne({ email })
-      .populate('Interest')
-      .exec();
+    const document = await this.userModel.findOne({ email }).populate('interests').exec();
     return document ? this.userMapper.toDomain(document) : null;
   }
 
   async findById(userId: string): Promise<User | null> {
-    const document = await this.userModel
-      .findById(userId)
-      .populate('Interest')
-      .exec();
+    const document = await this.userModel.findById(userId).populate('interests').exec();
     return document ? this.userMapper.toDomain(document) : null;
   }
 

@@ -12,6 +12,7 @@ export class UserDtoMapper {
       email: userRequest.email,
       description: userRequest.description,
       birthDate: userRequest.birthDate,
+      interests: userRequest.interests,
       profilePicURL: userRequest.profilePicURL,
       lastTimeConnected: new Date(),
       semester: userRequest.semester,
