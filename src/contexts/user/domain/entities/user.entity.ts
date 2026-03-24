@@ -145,7 +145,17 @@ export class User {
   }
 
   validateAge() {
-    const age = new Date().getFullYear() - new Date(this.props.birthDate).getFullYear();
+    const today = new Date();
+    const birthDate = new Date(this.props.birthDate);
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    const dayDiff = today.getDate() - birthDate.getDate();
+
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
 
     if (age < 18) {
       throw new Error('User must be at least 18 years old');
