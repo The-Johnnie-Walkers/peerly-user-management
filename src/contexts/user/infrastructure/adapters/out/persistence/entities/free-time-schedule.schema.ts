@@ -7,13 +7,13 @@ export type FreeTimeScheduleDocument = HydratedDocument<FreeTimeScheduleSchema>;
 @Schema()
 export class FreeTimeScheduleSchema {
   @Prop({ required: true })
-  startsAt: Date;
+  startsAt!: Date;
 
   @Prop({ required: true })
-  endsAt: Date;
+  endsAt!: Date;
 
   @Prop({ required: true })
-  dayOfTheWeek: DayOfTheWeek;
+  dayOfTheWeek!: DayOfTheWeek;
 }
 
 export const FreeTimeScheduleDefinition = SchemaFactory.createForClass(

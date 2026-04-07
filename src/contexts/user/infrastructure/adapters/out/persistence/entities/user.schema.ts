@@ -11,61 +11,61 @@ export type UserDocument = HydratedDocument<UserSchema>;
 @Schema()
 export class UserSchema {
   @Prop({ required: true, unique: true })
-  username: string;
+  username!: string;
 
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: true })
-  lastname: string;
+  lastname!: string;
 
   @Prop({ required: true, unique: true })
-  email: string;
+  email!: string;
 
   @Prop()
-  description: string;
+  description!: string;
 
   @Prop({ required: true })
-  birthDate: Date;
+  birthDate!: Date;
 
   @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Interest' }],
     default: [],
   })
-  interests: mongoose.Types.ObjectId[];
+  interests!: mongoose.Types.ObjectId[];
 
   @Prop()
-  profilePicURL: string;
+  profilePicURL!: string;
 
   @Prop()
-  lastTimeConnected: Date;
+  lastTimeConnected!: Date;
 
   @Prop({ required: true })
-  semester: number;
+  semester!: number;
 
   @Prop({ required: true })
-  isOnline: boolean;
+  isOnline!: boolean;
 
   @Prop({ required: true })
-  isVerified: boolean;
+  isVerified!: boolean;
 
   @Prop({ required: true })
-  createdAt: Date;
+  createdAt!: Date;
 
   @Prop({ required: true })
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @Prop({ type: [FreeTimeScheduleSchema], default: [] })
-  freeTimeSchedule: FreeTimeScheduleSchema[];
+  freeTimeSchedule!: FreeTimeScheduleSchema[];
 
   @Prop({ required: true })
-  status: Status;
+  status!: Status;
 
   @Prop({ required: true })
-  programs: Program[];
+  programs!: Program[];
 
   @Prop({ required: true })
-  role: UserRole;
+  role!: UserRole;
 }
 
 export const UserSchemaDefinition = SchemaFactory.createForClass(UserSchema);
