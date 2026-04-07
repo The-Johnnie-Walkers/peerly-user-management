@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { UserPatterns } from '../../domain/messaging/user.patterns';
-import { UserService } from '../../application/service/user.service';
+import { UserPatterns } from '../../../domain/messaging/user.patterns';
+import { UserService } from '../../../application/service/user.service';
 
 interface GetUserRoleCommand {
   userId: string;
