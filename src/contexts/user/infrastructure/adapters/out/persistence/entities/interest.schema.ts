@@ -7,10 +7,10 @@ export type InterestDocument = HydratedDocument<InterestSchema>;
 @Schema()
 export class InterestSchema {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: true })
-  category: Category;
+  category!: Category;
 }
 
 export const InterestSchemaDefinition =
