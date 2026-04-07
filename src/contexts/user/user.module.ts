@@ -9,6 +9,7 @@ import { UserRepository } from './infrastructure/adapters/out/persistence/reposi
 import { InterestRepository } from './infrastructure/adapters/out/persistence/repositories/interest/interest.repository';
 import { UserController } from './infrastructure/adapters/in/http/controllers/user.controller';
 import { InterestController } from './infrastructure/adapters/in/http/controllers/interest.controller';
+import { UserMessageController } from './infrastructure/in/controllers/user-message.controller';
 import { UserService } from './application/service/user.service';
 import { InterestService } from './application/service/interest.service';
 import { UserDtoMapper } from './infrastructure/adapters/in/http/mapper/user-dto.mapper';
@@ -90,6 +91,6 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
       useClass: UserRepositoryAdapter,
     }
   ],
-  controllers: [UserController, InterestController],
+  controllers: [UserController, InterestController, UserMessageController],
 })
 export class UserModule { }
