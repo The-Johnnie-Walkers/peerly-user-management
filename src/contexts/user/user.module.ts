@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 import { UserSchemaDefinition } from './infrastructure/adapters/out/persistence/entities/user.schema';
 import { User } from './domain/entities/user.entity';
 import { Interest } from './domain/entities/interest.entity';
@@ -26,12 +27,28 @@ import { GetInterestUseCaseImpl } from './application/use-cases/interest/get-int
 import { GetAllInterestsUseCaseImpl } from './application/use-cases/interest/get-all-interests-use-case.impl';
 import { InterestRepositoryAdapter } from './infrastructure/adapters/out/persistence/repositories/interest/interest-adapter.repository';
 import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence/repositories/user/user-adapter.repository';
+import { ConnectionMessagingClientService } from './infrastructure/adapters/out/messaging/connection-messaging-client.service';
+import { CommunityController } from './infrastructure/adapters/in/http/controllers/community.controller';
+import { ConnectionController } from './infrastructure/adapters/in/http/controllers/connection.controller';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchemaDefinition },
       { name: Interest.name, schema: InterestSchemaDefinition },
+    ]),
+    ClientsModule.register([
+      {
+        name: 'CONNECTION_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://localhost:5672'],
+          queue: 'connections_queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
+      },
     ]),
   ],
   providers: [
@@ -42,6 +59,7 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
     InterestService,
     UserDtoMapper,
     InterestDtoMapper,
+    ConnectionMessagingClientService,
     {
       provide: 'CreateUserUseCaseToken',
       useClass: CreateUserUseCaseImpl,
@@ -91,6 +109,7 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
       useClass: UserRepositoryAdapter,
     }
   ],
-  controllers: [UserController, InterestController, UserMessageController],
+  controllers: [UserController, InterestController, UserMessageController, ConnectionController,
+  CommunityController],
 })
 export class UserModule { }
