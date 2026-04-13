@@ -9,7 +9,7 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: ['amqp://127.0.0.1:5672'],
+      urls: ['amqp://localhost:5672'],
       queue: 'user_queue',
       queueOptions: {
         durable: true,
