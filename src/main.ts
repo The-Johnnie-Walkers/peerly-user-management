@@ -9,7 +9,7 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: ['amqp://localhost:5672'],
+      urls: ['amqp://127.0.0.1:5672'],
       queue: 'user_queue',
       queueOptions: {
         durable: true,
@@ -19,7 +19,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: ['http://localhost:5173'],
+    origin: ['*'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     allowedHeaders: 'Content-Type,Authorization'
