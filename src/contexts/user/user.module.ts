@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ActivityMessagingClientService } from './infrastructure/adapters/out/messaging/activity-messaging-client.service';
+import { ActivityController } from './infrastructure/adapters/in/http/controllers/activity.controller';
 import { UserSchemaDefinition } from './infrastructure/adapters/out/persistence/entities/user.schema';
 import { User } from './domain/entities/user.entity';
 import { Interest } from './domain/entities/interest.entity';
@@ -32,6 +35,19 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchemaDefinition },
       { name: Interest.name, schema: InterestSchemaDefinition },
+    ]),
+    ClientsModule.register([
+      {
+        name: 'ACTIVITY_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://localhost:5672'],
+          queue: 'activities_queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
+      },
     ]),
   ],
   providers: [
@@ -89,8 +105,9 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
     {
       provide: 'UserRepositoryOutPortToken',
       useClass: UserRepositoryAdapter,
-    }
+    },
+    ActivityMessagingClientService,
   ],
-  controllers: [UserController, InterestController, UserMessageController],
+  controllers: [UserController, InterestController, UserMessageController, ActivityController],
 })
 export class UserModule { }
