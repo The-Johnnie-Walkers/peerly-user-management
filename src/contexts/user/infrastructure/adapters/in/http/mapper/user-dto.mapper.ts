@@ -5,7 +5,7 @@ import { UserResponseDTO } from '../dto/response/user-response.dto';
 export class UserDtoMapper {
   toDomain(userRequest: UserRequestDTO): User {
     return new User({
-      id: '',
+      id: userRequest.id ?? '',
       username: userRequest.username,
       name: userRequest.name,
       lastname: userRequest.lastname,

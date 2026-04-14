@@ -19,11 +19,11 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: ['*'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: process.env.CORS_ORIGIN?.split(',') ?? ['http://localhost:8080'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
-    allowedHeaders: 'Content-Type,Authorization'
-  })
+    allowedHeaders: 'Content-Type,Authorization',
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

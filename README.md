@@ -22,6 +22,7 @@ This microservice handles all user-related functionality including:
 
 - **Framework**: NestJS
 - **Database**: MongoDB with Mongoose
+- **Messaging**: RabbitMQ (AMQP)
 - **Language**: TypeScript
 
 ## Project Structure
@@ -52,6 +53,7 @@ src/
 - Node.js (LTS version)
 - pnpm (recommended) or npm
 - MongoDB instance
+- RabbitMQ instance (default: `amqp://localhost:5672`, queue: `user_queue`)
 
 ### Installation
 
@@ -66,7 +68,7 @@ $ pnpm install
 
 ### Configuration
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the root directory (use `.env.example` as reference):
 
 ```env
 # MongoDB connection
@@ -74,7 +76,12 @@ MONGODB_URI=mongodb://localhost:27017/peerly
 
 # Application
 PORT=3000
+
+# CORS — allowed origins (comma-separated for multiple)
+CORS_ORIGIN=http://localhost:8080
 ```
+
+> `CORS_ORIGIN` supports multiple origins: `http://localhost:8080,http://localhost:4200`
 
 ### Running the app
 
@@ -98,8 +105,38 @@ $ pnpm run start:prod
 | GET    | `/users`     | Get all users   |
 | GET    | `/users/:id` | Get user by ID  |
 | POST   | `/users`     | Create new user |
-| PATCH  | `/users/:id` | Update user     |
+| PUT    | `/users/:id` | Update user     |
 | DELETE | `/users/:id` | Delete user     |
+
+**POST `/users` — Request body:**
+
+```json
+{
+  "id": "optional-auth-service-id",
+  "username": "jdoe123",
+  "name": "John",
+  "lastname": "Doe",
+  "email": "john@example.com",
+  "birthDate": "2000-05-15",
+  "semester": 5,
+  "status": "ACTIVE",
+  "programs": ["SYSTEMS_ENGINEERING"],
+  "role": "USER",
+  "description": "optional",
+  "profilePicURL": "optional",
+  "interests": [],
+  "freeTimeSchedule": []
+}
+```
+
+> The `id` field is optional. If provided, the document will be saved with that ID — useful for syncing with the Auth microservice so both share the same user ID.
+
+**Enum values:**
+- `status`: `ACTIVE` | `INACTIVE` | `SUSPENDED` | `BLOCKED`
+- `role`: `USER` | `ADMIN`
+- `programs` (max 2): `SYSTEMS_ENGINEERING`, `CIVIL_ENGINEERING`, `INDUSTRIAL_ENGINEERING`, `CYBERSECURITY_ENGINEERING`, `MECHANICAL_ENGINEERING`, `ELECTRICAL_ENGINEERING`, `BIOMEDICAL_ENGINEERING`, `AI_ENGINEERING`, `ELECTRONICAL_ENGINEERING`, `ENVIRONMENTAL_ENGINEERING`, `BIOTECHNOLOGY_ENGINEERING`, `STATISTIC_ENGINEERING`, `ECONOMY`, `MATHEMATICS`, `ENTERPRISE_ADMINISTRATION`
+- `interests[].category` (max 5): `SPORTS` | `VIDEOGAMES` | `MUSIC` | `MOVIES` | `BOOKS` | `TECHNOLOGY` | `OTHER`
+- `freeTimeSchedule[].dayOfTheWeek`: `MONDAY` | `TUESDAY` | `WEDNESDAY` | `THURSDAY` | `FRIDAY` | `SATURDAY`
 
 ### Interests
 
@@ -108,7 +145,7 @@ $ pnpm run start:prod
 | GET    | `/interests`     | Get all interests   |
 | GET    | `/interests/:id` | Get interest by ID  |
 | POST   | `/interests`     | Create new interest |
-| PATCH  | `/interests/:id` | Update interest     |
+| PUT    | `/interests/:id` | Update interest     |
 | DELETE | `/interests/:id` | Delete interest     |
 
 
