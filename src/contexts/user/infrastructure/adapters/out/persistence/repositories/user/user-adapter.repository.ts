@@ -26,7 +26,9 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
       description: user.description,
       birthDate: user.birthDate,
       interests:
-        user.interests?.map((i) => new mongoose.Types.ObjectId(i.id)) ?? [],
+        user.interests
+          ?.filter((i) => mongoose.isValidObjectId(i.id))
+          .map((i) => new mongoose.Types.ObjectId(i.id)) ?? [],
       profilePicURL: user.profilePicURL,
       lastTimeConnected: user.lastTimeConnected,
       semester: user.semester,
@@ -34,7 +36,9 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
       isVerified: user.isVerified,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-      freeTimeSchedule: user.freeTimeSchedule,
+      freeTimeSchedule: user.freeTimeSchedule
+        ? user.freeTimeSchedule.map((ft) => this.userMapper.freeTimeScheduleToDocument(ft)) as any
+        : [],
       status: user.status,
       programs: user.programs,
       role: user.role,
@@ -68,7 +72,10 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
     actualUser.role = user.role;
 
     const updatedDocument = this.userMapper.toDocument(actualUser);
-    const savedDocument = await this.userModel.findByIdAndUpdate(id, updatedDocument, { returnDocument: 'after' }).exec();
+    const savedDocument = await this.userModel
+      .findByIdAndUpdate(id, updatedDocument, { returnDocument: 'after' })
+      .populate('interests')
+      .exec();
 
     if (!savedDocument)
       throw new NotFoundException(`User with id ${id} could not be updated`);
