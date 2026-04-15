@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ActivityMessagingClientService } from './infrastructure/adapters/out/messaging/activity-messaging-client.service';
 import { ActivityController } from './infrastructure/adapters/in/http/controllers/activity.controller';
 import { UserSchemaDefinition } from './infrastructure/adapters/out/persistence/entities/user.schema';
@@ -47,6 +46,12 @@ import { ConnectionController } from './infrastructure/adapters/in/http/controll
         options: {
           urls: ['amqp://localhost:5672'],
           queue: 'connections_queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
+      },
+      {
         name: 'ACTIVITY_SERVICE',
         transport: Transport.RMQ,
         options: {
@@ -119,6 +124,6 @@ import { ConnectionController } from './infrastructure/adapters/in/http/controll
     ActivityMessagingClientService,
   ],
   controllers: [UserController, InterestController, UserMessageController, ConnectionController,
-  CommunityController, ActivityController],
+    CommunityController, ActivityController],
 })
 export class UserModule { }
