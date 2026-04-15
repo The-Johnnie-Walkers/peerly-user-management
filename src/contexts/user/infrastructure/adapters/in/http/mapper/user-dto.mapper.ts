@@ -29,6 +29,7 @@ export class UserDtoMapper {
 
   toResponse(user: User): UserResponseDTO {
     return {
+      id: user.id,
       username: user.username,
       name: user.name,
       lastname: user.lastname,

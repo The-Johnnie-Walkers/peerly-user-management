@@ -4,6 +4,8 @@ import { Program } from 'src/contexts/user/domain/enums/program.enum';
 import { Status } from 'src/contexts/user/domain/enums/status.enum';
 
 export class UserResponseDTO {
+  id: string;
+
   username: string;
 
   name: string;
