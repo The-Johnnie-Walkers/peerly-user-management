@@ -22,8 +22,8 @@ async function bootstrap() {
     origin: ['http://localhost:5173', 'http://localhost:8080'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-    allowedHeaders: 'Content-Type,Authorization'
-  })
+    allowedHeaders: 'Content-Type,Authorization',
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

@@ -23,17 +23,11 @@ export class UserService implements CreateUserUseCase, UpdateUserUseCase, Delete
 
   async createUser(user: User): Promise<User> {
     user.validateAge();
-    user.interests?.map(interest => user.addInterest(interest));
-    user.freeTimeSchedule?.map(schedule => user.addFreeTimeSchedule(schedule));
-    user.programs?.map(program => user.addProgram(program));
     return await this.createUserUseCase.createUser(user);
   }
 
   async updateUser(id: string, user: User): Promise<User> {
     user.validateAge();
-    user.interests?.map(interest => user.addInterest(interest));
-    user.freeTimeSchedule?.map(schedule => user.addFreeTimeSchedule(schedule));
-    user.programs?.map(program => user.addProgram(program));
     return await this.updateUserUseCase.updateUser(id, user);
   }
 

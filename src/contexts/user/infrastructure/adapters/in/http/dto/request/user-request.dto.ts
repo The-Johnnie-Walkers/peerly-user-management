@@ -6,6 +6,9 @@ import { Status } from 'src/contexts/user/domain/enums/status.enum';
 import { UserRole } from 'src/contexts/user/domain/enums/user-role.enum';
 
 export class UserRequestDTO {
+  @IsOptional()
+  id?: string;
+
   @IsNotEmpty()
   username: string;
 
