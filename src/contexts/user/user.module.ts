@@ -32,9 +32,13 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
 import { ConnectionMessagingClientService } from './infrastructure/adapters/out/messaging/connection-messaging-client.service';
 import { CommunityController } from './infrastructure/adapters/in/http/controllers/community.controller';
 import { ConnectionController } from './infrastructure/adapters/in/http/controllers/connection.controller';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchemaDefinition },
       { name: Interest.name, schema: InterestSchemaDefinition },
@@ -44,7 +48,7 @@ import { ConnectionController } from './infrastructure/adapters/in/http/controll
         name: 'CONNECTION_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://localhost:5672'],
+          urls: [`${process.env.RABBIT_MQ_URL}`],
           queue: 'connections_queue',
           queueOptions: {
             durable: true,
@@ -55,7 +59,7 @@ import { ConnectionController } from './infrastructure/adapters/in/http/controll
         name: 'ACTIVITY_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://localhost:5672'],
+          urls: [`${process.env.RABBIT_MQ_URL}`],
           queue: 'activities_queue',
           queueOptions: {
             durable: true,
