@@ -1,7 +1,7 @@
 import { ActivityStatus } from '../../../enums/activity-status.enum';
 
 export class CreateActivityCommand {
-    requesterUserId!: string;
+    requesterId!: string;
     name!: string;
     description!: string;
     startsAt!: Date;

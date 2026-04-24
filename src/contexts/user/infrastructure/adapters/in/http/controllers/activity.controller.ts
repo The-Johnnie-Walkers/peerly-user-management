@@ -90,8 +90,8 @@ export class ActivityController {
 
     @Post()
     async create(@Body() dto: CreateActivityRequestDTO) {
-        return this.activityMessagingClient.createActivity({
-            requesterUserId: dto.requesterUserId,
+        const response = await this.activityMessagingClient.createActivity({
+            requesterId: dto.requesterUserId,
             name: dto.name,
             description: dto.description,
             startsAt: dto.startsAt,
@@ -100,6 +100,14 @@ export class ActivityController {
             location: dto.location,
             totalPlaces: dto.totalPlaces,
         });
+
+        if (response.success) {
+            await this.userModel.findByIdAndUpdate(dto.requesterUserId, {
+                $addToSet: { joinedActivityIds: response.activityId },
+            }).exec();
+        }
+
+        return response;
     }
 
     @Put(':id')
