@@ -1,6 +1,6 @@
 import { InterestRequestDTO } from '../dto/request/interest-request.dto';
 import { InterestResponseDTO } from '../dto/response/interest-response.dto';
-import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
+import { Interest } from '../../../../../domain/entities/interest.entity';
 
 export class InterestDtoMapper {
   toDomain(interestRequest: InterestRequestDTO): Interest {

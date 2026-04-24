@@ -1,11 +1,11 @@
-import { User } from 'src/contexts/user/domain/entities/user.entity';
+import { User } from '../../../../../domain/entities/user.entity';
 import { UserDocument, UserSchema } from '../entities/user.schema';
 import { InterestDocument, InterestSchema } from '../entities/interest.schema';
 import { FreeTimeScheduleDocument, FreeTimeScheduleSchema } from '../entities/free-time-schedule.schema';
-import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
+import { Interest } from '../../../../../domain/entities/interest.entity';
 import mongoose from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { FreeTimeSchedule } from 'src/contexts/user/domain/entities/free-time-schedule.entity';
+import { FreeTimeSchedule } from '../../../../../domain/entities/free-time-schedule.entity';
 
 @Injectable()
 export class UserMapper {

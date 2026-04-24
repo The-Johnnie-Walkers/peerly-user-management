@@ -1,9 +1,11 @@
-import { FreeTimeSchedule } from 'src/contexts/user/domain/entities/free-time-schedule.entity';
-import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
-import { Program } from 'src/contexts/user/domain/enums/program.enum';
-import { Status } from 'src/contexts/user/domain/enums/status.enum';
+import { FreeTimeSchedule } from '../../../../../../domain/entities/free-time-schedule.entity';
+import { Interest } from '../../../../../../domain/entities/interest.entity';
+import { Program } from '../../../../../../domain/enums/program.enum';
+import { Status } from '../../../../../../domain/enums/status.enum';
 
 export class UserResponseDTO {
+  id: string;
+
   username: string;
 
   name: string;
@@ -35,4 +37,6 @@ export class UserResponseDTO {
   status: Status;
 
   programs: Program[];
+
+  role: string;
 }

@@ -1,4 +1,4 @@
-import { User } from 'src/contexts/user/domain/entities/user.entity';
+import { User } from '../../../../../domain/entities/user.entity';
 import { UserRequestDTO } from '../dto/request/user-request.dto';
 import { UserResponseDTO } from '../dto/response/user-response.dto';
 
@@ -29,6 +29,7 @@ export class UserDtoMapper {
 
   toResponse(user: User): UserResponseDTO {
     return {
+      id: user.id,
       username: user.username,
       name: user.name,
       lastname: user.lastname,
@@ -45,6 +46,7 @@ export class UserDtoMapper {
       freeTimeSchedule: user.freeTimeSchedule,
       status: user.status,
       programs: user.programs,
+      role: user.role,
     };
   }
 

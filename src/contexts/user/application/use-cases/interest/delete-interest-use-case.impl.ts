@@ -1,5 +1,5 @@
-import { DeleteInterestUseCase } from 'src/contexts/user/domain/ports/in/interest/delete-interest-use-case.port';
-import type { InterestRepositoryOutPort } from 'src/contexts/user/domain/ports/out/interest-repository-out.port';
+import { DeleteInterestUseCase } from '../../../domain/ports/in/interest/delete-interest-use-case.port';
+import type { InterestRepositoryOutPort } from '../../../domain/ports/out/interest-repository-out.port';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()

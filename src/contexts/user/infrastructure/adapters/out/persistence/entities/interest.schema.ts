@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { Category } from 'src/contexts/user/domain/enums/category.enum';
+import { Category } from '../../../../../domain/enums/category.enum';
 
 export type InterestDocument = HydratedDocument<InterestSchema>;
 

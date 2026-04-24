@@ -1,5 +1,5 @@
-import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
-import { InterestRepositoryOutPort } from 'src/contexts/user/domain/ports/out/interest-repository-out.port';
+import { Interest } from '../../../../../../domain/entities/interest.entity';
+import { InterestRepositoryOutPort } from '../../../../../../domain/ports/out/interest-repository-out.port';
 import { InterestRepository } from './interest.repository';
 import { UserMapper } from '../../mappers/user.mapper';
 import { InjectModel } from '@nestjs/mongoose';

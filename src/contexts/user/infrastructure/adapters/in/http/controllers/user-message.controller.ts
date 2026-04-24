@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { UserPatterns } from '../../../domain/messaging/user.patterns';
-import { UserService } from '../../../application/service/user.service';
+import { UserPatterns } from '../../../../../domain/messaging/user.patterns';
+import { UserService } from '../../../../../application/service/user.service';
 
 interface GetUserRoleCommand {
   userId: string;
@@ -20,7 +20,7 @@ export class UserMessageController {
       }
       return { role: user.role };
     } catch (error) {
-      return { role: null, error: error.message };
+      return { role: null, error: String(error) };
     }
   }
 
@@ -33,7 +33,7 @@ export class UserMessageController {
       }
       return { user };
     } catch (error) {
-      return { user: null, error: error.message };
+      return { user: null, error: String(error)};
     }
   }
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
+import { Interest } from '../../../../../../domain/entities/interest.entity';
 import { InterestDocument } from '../../entities/interest.schema';
 import { UserMapper } from '../../mappers/user.mapper';
 import { Model } from 'mongoose';
-import { Category } from 'src/contexts/user/domain/enums/category.enum';
+import { Category } from '../../../../../../domain/enums/category.enum';
 
 @Injectable()
 export class InterestRepository {

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { InterestRequestDTO } from '../dto/request/interest-request.dto';
 import { InterestResponseDTO } from '../dto/response/interest-response.dto';
-import { InterestService } from 'src/contexts/user/application/service/interest.service';
+import { InterestService } from '../../../../../application/service/interest.service';
 import { InterestDtoMapper } from '../mapper/interest-dto.mapper';
 
 @Controller('/interests')

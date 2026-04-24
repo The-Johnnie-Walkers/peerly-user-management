@@ -1,5 +1,5 @@
-import { DeleteUserUseCase } from 'src/contexts/user/domain/ports/in/user/delete-user-use-case.port';
-import type { UserRepositoryOutPort } from 'src/contexts/user/domain/ports/out/user-repository-out.port';
+import { DeleteUserUseCase } from '../../../domain/ports/in/user/delete-user-use-case.port';
+import type { UserRepositoryOutPort } from '../../../domain/ports/out/user-repository-out.port';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()

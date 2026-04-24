@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/contexts/user/domain/entities/user.entity';
+import { User } from '../../../../../../domain/entities/user.entity';
 import { UserDocument } from '../../entities/user.schema';
 import { UserMapper } from '../../mappers/user.mapper';
 import { Model } from 'mongoose';
@@ -18,7 +18,11 @@ export class UserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const document = await this.userModel.findOne({ email }).populate('interests').exec();
+    const normalizedEmail = email.trim().toLowerCase();
+    const document = await this.userModel
+      .findOne({ email: new RegExp(`^${normalizedEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') })
+      .populate('interests')
+      .exec();
     return document ? this.userMapper.toDomain(document) : null;
   }
 

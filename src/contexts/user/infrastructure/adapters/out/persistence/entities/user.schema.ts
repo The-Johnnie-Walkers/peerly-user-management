@@ -4,7 +4,7 @@ import { Status } from '../../../../../domain/enums/status.enum';
 import { Program } from '../../../../../domain/enums/program.enum';
 import { FreeTimeScheduleSchema } from './free-time-schedule.schema';
 import * as mongoose from 'mongoose';
-import { UserRole } from 'src/contexts/user/domain/enums/user-role.enum';
+import { UserRole } from '../../../../../domain/enums/user-role.enum';
 
 export type UserDocument = HydratedDocument<UserSchema>;
 
@@ -57,6 +57,9 @@ export class UserSchema {
 
   @Prop({ type: [FreeTimeScheduleSchema], default: [] })
   freeTimeSchedule!: FreeTimeScheduleSchema[];
+
+  @Prop({ type: [String], default: [] })
+  joinedActivityIds!: string[];
 
   @Prop({ required: true })
   status!: Status;

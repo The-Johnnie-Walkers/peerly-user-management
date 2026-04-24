@@ -1,9 +1,9 @@
 import { IsArray, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
-import { FreeTimeSchedule } from 'src/contexts/user/domain/entities/free-time-schedule.entity';
-import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
-import { Program } from 'src/contexts/user/domain/enums/program.enum';
-import { Status } from 'src/contexts/user/domain/enums/status.enum';
-import { UserRole } from 'src/contexts/user/domain/enums/user-role.enum';
+import { FreeTimeSchedule } from '../../../../../../domain/entities/free-time-schedule.entity';
+import { Interest } from '../../../../../../domain/entities/interest.entity';
+import { Program } from '../../../../../../domain/enums/program.enum';
+import { Status } from '../../../../../../domain/enums/status.enum';
+import { UserRole } from '../../../../../../domain/enums/user-role.enum';
 
 export class UserRequestDTO {
   @IsNotEmpty()
