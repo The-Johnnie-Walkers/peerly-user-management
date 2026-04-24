@@ -29,6 +29,9 @@ import { GetInterestUseCaseImpl } from './application/use-cases/interest/get-int
 import { GetAllInterestsUseCaseImpl } from './application/use-cases/interest/get-all-interests-use-case.impl';
 import { InterestRepositoryAdapter } from './infrastructure/adapters/out/persistence/repositories/interest/interest-adapter.repository';
 import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence/repositories/user/user-adapter.repository';
+import { ConnectionMessagingClientService } from './infrastructure/adapters/out/messaging/connection-messaging-client.service';
+import { CommunityController } from './infrastructure/adapters/in/http/controllers/community.controller';
+import { ConnectionController } from './infrastructure/adapters/in/http/controllers/connection.controller';
 
 @Module({
   imports: [
@@ -37,6 +40,17 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
       { name: Interest.name, schema: InterestSchemaDefinition },
     ]),
     ClientsModule.register([
+      {
+        name: 'CONNECTION_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://localhost:5672'],
+          queue: 'connections_queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
+      },
       {
         name: 'ACTIVITY_SERVICE',
         transport: Transport.RMQ,
@@ -58,6 +72,7 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
     InterestService,
     UserDtoMapper,
     InterestDtoMapper,
+    ConnectionMessagingClientService,
     {
       provide: 'CreateUserUseCaseToken',
       useClass: CreateUserUseCaseImpl,
@@ -108,6 +123,7 @@ import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence
     },
     ActivityMessagingClientService,
   ],
-  controllers: [UserController, InterestController, UserMessageController, ActivityController],
+  controllers: [UserController, InterestController, UserMessageController, ConnectionController,
+    CommunityController, ActivityController],
 })
 export class UserModule { }

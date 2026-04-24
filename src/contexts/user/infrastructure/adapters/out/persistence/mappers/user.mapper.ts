@@ -41,7 +41,11 @@ export class UserMapper {
       email: entity.email,
       description: entity.description,
       birthDate: entity.birthDate,
-      interests: entity.interests? entity.interests.map((interest) => new mongoose.Types.ObjectId(interest.id),): undefined,
+      interests: entity.interests
+        ? entity.interests
+            .filter((interest) => mongoose.isValidObjectId(interest.id))
+            .map((interest) => new mongoose.Types.ObjectId(interest.id))
+        : [],
       profilePicURL: entity.profilePicURL,
       lastTimeConnected: entity.lastTimeConnected,
       semester: entity.semester,
@@ -49,7 +53,9 @@ export class UserMapper {
       isVerified: entity.isVerified,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
-      freeTimeSchedule: entity.freeTimeSchedule,
+      freeTimeSchedule: entity.freeTimeSchedule
+        ? entity.freeTimeSchedule.map((ft) => this.freeTimeScheduleToDocument(ft)) as FreeTimeScheduleSchema[]
+        : [],
       status: entity.status,
       programs: entity.programs,
       role: entity.role,

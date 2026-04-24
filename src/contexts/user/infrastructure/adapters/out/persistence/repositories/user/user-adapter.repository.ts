@@ -5,7 +5,7 @@ import { UserMapper } from '../../mappers/user.mapper';
 import { UserDocument, UserSchema } from '../../entities/user.schema';
 import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class UserRepositoryAdapter implements UserRepositoryOutPort {
@@ -17,7 +17,8 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
   ) { }
 
   async save(user: User): Promise<User> {
-    const UserDocument: Partial<UserSchema> = {
+    const UserDocument: Partial<UserSchema> & { _id?: string } = {
+      ...(user.id ? { _id: user.id } : {}),
       username: user.username,
       name: user.name,
       lastname: user.lastname,
@@ -25,7 +26,9 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
       description: user.description,
       birthDate: user.birthDate,
       interests:
-        user.interests?.map((i) => new mongoose.Types.ObjectId(i.id)) ?? [],
+        user.interests
+          ?.filter((i) => mongoose.isValidObjectId(i.id))
+          .map((i) => new mongoose.Types.ObjectId(i.id)) ?? [],
       profilePicURL: user.profilePicURL,
       lastTimeConnected: user.lastTimeConnected,
       semester: user.semester,
@@ -33,7 +36,9 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
       isVerified: user.isVerified,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-      freeTimeSchedule: user.freeTimeSchedule,
+      freeTimeSchedule: user.freeTimeSchedule
+        ? user.freeTimeSchedule.map((ft) => this.userMapper.freeTimeScheduleToDocument(ft)) as any
+        : [],
       status: user.status,
       programs: user.programs,
       role: user.role,
@@ -45,7 +50,7 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
 
   async update(id: string, user: User): Promise<User> {
     const actualUser = await this.userRepository.findById(id);
-    if (!actualUser) throw new Error(`User with id ${id} not found`);
+    if (!actualUser) throw new NotFoundException(`User with id ${id} not found`);
 
     actualUser.username = user.username;
     actualUser.name = user.name;
@@ -67,16 +72,20 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
     actualUser.role = user.role;
 
     const updatedDocument = this.userMapper.toDocument(actualUser);
-    const savedDocument = await this.userModel.findByIdAndUpdate(id, updatedDocument, { returnDocument: 'after' }).exec();
+    const savedDocument = await this.userModel
+      .findByIdAndUpdate(id, updatedDocument, { returnDocument: 'after' })
+      .populate('interests')
+      .exec();
 
     if (!savedDocument)
-      throw new Error(`User with id ${id} could not be updated`);
+      throw new NotFoundException(`User with id ${id} could not be updated`);
 
     return this.userMapper.toDomain(savedDocument);
   }
+
   async deleteById(id: string): Promise<void> {
     const actualUser = await this.userRepository.findById(id);
-    if (!actualUser) throw new Error(`User with id ${id} not found`);
+    if (!actualUser) throw new NotFoundException(`User with id ${id} not found`);
 
     await this.userRepository.deleteById(id);
     return Promise.resolve();
@@ -84,7 +93,7 @@ export class UserRepositoryAdapter implements UserRepositoryOutPort {
 
   async findById(id: string): Promise<User> {
     const user = await this.userRepository.findById(id);
-    if (!user) throw new Error(`User with id ${id} not found`);
+    if (!user) throw new NotFoundException(`User with id ${id} not found`);
     return user;
   }
 
