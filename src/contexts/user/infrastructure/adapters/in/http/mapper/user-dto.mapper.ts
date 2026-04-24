@@ -1,8 +1,8 @@
 import { User } from '../../../../../domain/entities/user.entity';
 import { UserRequestDTO } from '../dto/request/user-request.dto';
 import { UserResponseDTO } from '../dto/response/user-response.dto';
-import { Interest } from 'src/contexts/user/domain/entities/interest.entity';
-import { FreeTimeSchedule } from 'src/contexts/user/domain/entities/free-time-schedule.entity';
+import { Interest } from '../../../../../domain/entities/interest.entity';
+import { FreeTimeSchedule } from '../../../../../domain/entities/free-time-schedule.entity';
 
 export class UserDtoMapper {
   toDomain(userRequest: UserRequestDTO): User {

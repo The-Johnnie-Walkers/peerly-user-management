@@ -1,0 +1,15 @@
+[1mdiff --git a/src/contexts/user/infrastructure/adapters/in/http/mapper/user-dto.mapper.ts b/src/contexts/user/infrastructure/adapters/in/http/mapper/user-dto.mapper.ts[m
+[1mindex 78239cb..0e31d5e 100644[m
+[1m--- a/src/contexts/user/infrastructure/adapters/in/http/mapper/user-dto.mapper.ts[m
+[1m+++ b/src/contexts/user/infrastructure/adapters/in/http/mapper/user-dto.mapper.ts[m
+[36m@@ -1,8 +1,8 @@[m
+ import { User } from '../../../../../domain/entities/user.entity';[m
+ import { UserRequestDTO } from '../dto/request/user-request.dto';[m
+ import { UserResponseDTO } from '../dto/response/user-response.dto';[m
+[31m-import { Interest } from 'src/contexts/user/domain/entities/interest.entity';[m
+[31m-import { FreeTimeSchedule } from 'src/contexts/user/domain/entities/free-time-schedule.entity';[m
+[32m+[m[32mimport { Interest } from '../../../../../domain/entities/interest.entity';[m
+[32m+[m[32mimport { FreeTimeSchedule } from '../../../../../domain/entities/free-time-schedule.entity';[m
+ [m
+ export class UserDtoMapper {[m
+   toDomain(userRequest: UserRequestDTO): User {[m
