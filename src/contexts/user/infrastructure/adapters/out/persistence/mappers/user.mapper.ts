@@ -43,7 +43,7 @@ export class UserMapper {
       birthDate: entity.birthDate,
       interests: entity.interests
         ? entity.interests
-            .filter((interest) => mongoose.isValidObjectId(interest.id))
+            .filter((interest) => !!interest.id)
             .map((interest) => new mongoose.Types.ObjectId(interest.id))
         : [],
       profilePicURL: entity.profilePicURL,
