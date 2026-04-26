@@ -129,7 +129,10 @@ export class ActivityController {
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
     async delete(@Param('id') id: string) {
-        await this.activityMessagingClient.deleteActivity({ activityId: id });
+        const response = await this.activityMessagingClient.deleteActivity({ activityId: id });
+        if (!response.success) {
+            throw new InternalServerErrorException(response.message ?? 'The activity could not be deleted');
+        }
         await this.userModel.updateMany(
             { joinedActivityIds: id },
             { $pull: { joinedActivityIds: id } },

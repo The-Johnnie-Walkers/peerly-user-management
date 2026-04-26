@@ -8,9 +8,11 @@ export class CreateActivityCommand {
     endsAt!: Date;
     status!: ActivityStatus;
     location!: {
+        osmId: string;
+        osmType: string;
+        displayName: string;
         latitude: number;
         longitude: number;
-        placeId: string;
         address: string;
         accuracy: number;
     };
