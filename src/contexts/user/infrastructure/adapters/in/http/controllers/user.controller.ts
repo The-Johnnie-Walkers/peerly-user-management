@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Delete, Get, Param, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Put, Patch, Delete, Get, Param, Body, NotFoundException } from '@nestjs/common';
 import { UserRepository } from '../../../out/persistence/repositories/user/user.repository';
 import { UserResponseDTO } from '../dto/response/user-response.dto';
 import { UserRequestDTO } from '../dto/request/user-request.dto';
@@ -89,5 +89,17 @@ export class UserController {
   async getAllUsers(): Promise<UserResponseDTO[]> {
     const users = await this.userService.getAllUsers();
     return this.userDtoMapper.toResponseList(users);
+  }
+
+  @Patch('/:id/presence')
+  async updatePresence(
+    @Param('id') id: string,
+    @Body() body: { isOnline: boolean },
+  ): Promise<void> {
+    const user = await this.userRepository.findById(id);
+    if (!user) throw new NotFoundException(`User ${id} not found`);
+    user.isOnline = body.isOnline;
+    user.lastTimeConnected = new Date();
+    await this.userService.updateUser(id, user);
   }
 }
