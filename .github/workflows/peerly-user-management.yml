@@ -46,7 +46,6 @@ jobs:
         with:
           name: node-app
           path: dist/
-          include-hidden-files: true
 
   deploy:
     runs-on: ubuntu-latest
