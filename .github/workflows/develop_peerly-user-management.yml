@@ -74,5 +74,4 @@ jobs:
           app-name: 'peerly-user-management'
           slot-name: 'Production'
           package: .
-          clean: true
           
