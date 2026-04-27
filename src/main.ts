@@ -19,7 +19,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: ['http://localhost:5173', 'http://localhost:8080'],
+    origin: ['http://localhost:5173', 'http://localhost:8080', 'https://peerly-user-management-cdduhkfehcb8aag2.canadacentral-01.azurewebsites.net'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     allowedHeaders: 'Content-Type,Authorization',
