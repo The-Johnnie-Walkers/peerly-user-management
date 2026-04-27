@@ -12,14 +12,22 @@ import { ActivityStatus } from '../../../../../../../../shared/enums/activity-st
 
 class LocationDTO {
     @IsNotEmpty()
+    @IsString()
+    osmId!: string;
+
+    @IsNotEmpty()
+    @IsString()
+    osmType!: string;
+
+    @IsNotEmpty()
+    @IsString()
+    displayName!: string;
+
+    @IsNotEmpty()
     latitude!: number;
 
     @IsNotEmpty()
     longitude!: number;
-
-    @IsNotEmpty()
-    @IsString()
-    placeId!: string;
 
     @IsNotEmpty()
     @IsString()

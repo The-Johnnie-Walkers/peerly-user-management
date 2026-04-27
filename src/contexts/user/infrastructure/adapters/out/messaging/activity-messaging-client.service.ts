@@ -28,9 +28,9 @@ export class ActivityMessagingClientService {
         );
     }
 
-    async deleteActivity(command: DeleteActivityCommand): Promise<void> {
+    async deleteActivity(command: DeleteActivityCommand): Promise<ActivityCommandResponse> {
         return firstValueFrom(
-            this.client.send<void>(ActivityPatterns.DELETE, command),
+            this.client.send<ActivityCommandResponse>(ActivityPatterns.DELETE, command),
         );
     }
 

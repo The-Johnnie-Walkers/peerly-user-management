@@ -9,7 +9,7 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: ['amqp://localhost:5672'],
+      urls: [`${process.env.RABBIT_MQ_URL}`],
       queue: 'user_queue',
       queueOptions: {
         durable: true,
@@ -19,7 +19,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: ['http://localhost:5173', 'http://localhost:8080'],
+    origin: ['http://localhost:5173', 'http://localhost:8080', `${process.env.PREPROD_URL}`, `${process.env.PROD_URL}`],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     allowedHeaders: 'Content-Type,Authorization',
@@ -34,6 +34,6 @@ async function bootstrap() {
   
   await app.startAllMicroservices();
   await app.listen(process.env.PORT ?? 3000);
-  console.log(`User Management running on: http://localhost:${process.env.PORT ?? 3000}`);
+  console.log(`User Management running on port ${process.env.PORT ?? 3000}`);
 }
 bootstrap().catch(console.error);
