@@ -28,4 +28,12 @@ export class Interest {
   set category(category: Category) {
     this.props.category = category;
   }
+
+  toJSON() {
+    return {
+      id: this.props.id,
+      name: this.props.name,
+      category: this.props.category,
+    };
+  }
 }

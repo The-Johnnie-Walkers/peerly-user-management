@@ -37,4 +37,13 @@ export class FreeTimeSchedule {
   set dayOfTheWeek(dayOfTheWeek: DayOfTheWeek) {
     this.props.dayOfTheWeek = dayOfTheWeek;
   }
+
+  toJSON() {
+    return {
+      id: this.props.id,
+      startsAt: this.props.startsAt,
+      endsAt: this.props.endsAt,
+      dayOfTheWeek: this.props.dayOfTheWeek,
+    };
+  }
 }

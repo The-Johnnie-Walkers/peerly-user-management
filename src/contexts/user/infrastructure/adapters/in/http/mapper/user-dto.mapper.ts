@@ -16,9 +16,10 @@ export class UserDtoMapper {
       birthDate: userRequest.birthDate,
       interests: userRequest.interests
         ? userRequest.interests.map((i: any) => new Interest({
-            id: i.id ?? '',
-            name: i.name ?? '',
-            category: i.category ?? null,
+            // El frontend puede enviar solo el ID como string o como objeto {id, name, category}
+            id: typeof i === 'string' ? i : (i.id ?? ''),
+            name: typeof i === 'string' ? '' : (i.name ?? ''),
+            category: typeof i === 'string' ? null : (i.category ?? null),
           }))
         : [],
       profilePicURL: userRequest.profilePicURL,
