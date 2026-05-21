@@ -33,6 +33,7 @@ import { ConnectionMessagingClientService } from './infrastructure/adapters/out/
 import { CommunityController } from './infrastructure/adapters/in/http/controllers/community.controller';
 import { ConnectionController } from './infrastructure/adapters/in/http/controllers/connection.controller';
 import { ConfigModule } from '@nestjs/config';
+import { AvatarStorageService } from './infrastructure/adapters/out/storage/avatar-storage.service';
 
 @Module({
   imports: [
@@ -126,6 +127,7 @@ import { ConfigModule } from '@nestjs/config';
       useClass: UserRepositoryAdapter,
     },
     ActivityMessagingClientService,
+    AvatarStorageService,
   ],
   controllers: [UserController, InterestController, UserMessageController, ConnectionController,
     CommunityController, ActivityController],

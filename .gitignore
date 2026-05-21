@@ -24,4 +24,8 @@ lerna-debug.log*
 .temp
 .tmp
 
+# Uploaded avatars (keep directory via .gitkeep)
+/uploads/avatars/*
+!/uploads/avatars/.gitkeep
+
 .vscode/
