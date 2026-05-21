@@ -1,5 +1,4 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { mkdir, writeFile } from 'fs/promises';
 import { join, extname } from 'path';
 
@@ -15,8 +14,6 @@ export interface AvatarUploadFile {
 
 @Injectable()
 export class AvatarStorageService {
-  constructor(private readonly configService: ConfigService) {}
-
   async save(userId: string, file: AvatarUploadFile): Promise<string> {
     if (!file.mimetype.startsWith('image/')) {
       throw new InternalServerErrorException('El archivo debe ser una imagen.');
@@ -31,8 +28,8 @@ export class AvatarStorageService {
     await mkdir(UPLOADS_DIR, { recursive: true });
     await writeFile(join(UPLOADS_DIR, filename), file.buffer);
 
-    const publicBase = this.getPublicBaseUrl();
-    return `${publicBase}/uploads/avatars/${filename}`;
+    // Ruta relativa: el frontend la resuelve con VITE_USER_MGMT_URL (evita localhost en preprod)
+    return `/uploads/avatars/${filename}`;
   }
 
   private resolveExtension(file: AvatarUploadFile): string {
@@ -49,14 +46,4 @@ export class AvatarStorageService {
     return mimeMap[file.mimetype] ?? '.jpg';
   }
 
-  private getPublicBaseUrl(): string {
-    const configured =
-      this.configService.get<string>('PUBLIC_URL') ??
-      this.configService.get<string>('API_PUBLIC_URL');
-    if (configured) {
-      return configured.replace(/\/$/, '');
-    }
-    const port = this.configService.get<string>('PORT') ?? '3000';
-    return `http://localhost:${port}`;
-  }
 }
