@@ -4,10 +4,11 @@ import type { DeleteUserUseCase } from '../../domain/ports/in/user/delete-user-u
 import type { GetAllUsersUseCase } from '../../domain/ports/in/user/get-all-users-use-case.port';
 import type { GetUserUseCase } from '../../domain/ports/in/user/get-user-use-case.port';
 import type { UpdateUserUseCase } from '../../domain/ports/in/user/update-user-use-case.port';
+import type { DiscoverUsersUseCase } from '../../domain/ports/in/user/discover-users-use-case.port';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
-export class UserService implements CreateUserUseCase, UpdateUserUseCase, DeleteUserUseCase, GetUserUseCase, GetAllUsersUseCase {
+export class UserService implements CreateUserUseCase, UpdateUserUseCase, DeleteUserUseCase, GetUserUseCase, GetAllUsersUseCase, DiscoverUsersUseCase {
   constructor(
     @Inject('CreateUserUseCaseToken')
     private createUserUseCase: CreateUserUseCase,
@@ -19,6 +20,8 @@ export class UserService implements CreateUserUseCase, UpdateUserUseCase, Delete
     private getUserUseCase: GetUserUseCase,
     @Inject('GetAllUsersUseCaseToken')
     private getAllUsersUseCase: GetAllUsersUseCase,
+    @Inject('DiscoverUsersUseCaseToken')
+    private discoverUsersUseCase: DiscoverUsersUseCase,
   ) { }
 
   async createUser(user: User): Promise<User> {
@@ -42,5 +45,9 @@ export class UserService implements CreateUserUseCase, UpdateUserUseCase, Delete
 
   async getAllUsers(): Promise<User[]> {
     return await this.getAllUsersUseCase.getAllUsers();
+  }
+
+  async discoverUsers(userId: string): Promise<User[]> {
+    return await this.discoverUsersUseCase.discoverUsers(userId);
   }
 }

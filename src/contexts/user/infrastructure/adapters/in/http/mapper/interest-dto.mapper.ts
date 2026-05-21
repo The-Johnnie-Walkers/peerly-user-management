@@ -13,6 +13,7 @@ export class InterestDtoMapper {
 
   toResponse(interest: Interest): InterestResponseDTO {
     return {
+      id: interest.id,
       name: interest.name,
       category: interest.category,
     };

@@ -6,6 +6,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
   Put,
   Req,
@@ -23,6 +24,8 @@ import { UserRequestDTO } from '../dto/request/user-request.dto';
 import { UserService } from '../../../../../application/service/user.service';
 import { UserDtoMapper } from '../mapper/user-dto.mapper';
 import { AvatarStorageService, type AvatarUploadFile } from '../../../out/storage/avatar-storage.service';
+import { DiscoverUsersUseCaseImpl } from '../../../../../application/use-cases/user/discover-users-use-case.impl';
+import { ConnectionMessagingClientService } from '../../../out/messaging/connection-messaging-client.service';
 
 @Controller('/users')
 export class UserController {
@@ -31,6 +34,8 @@ export class UserController {
     private userDtoMapper: UserDtoMapper,
     private userRepository: UserRepository,
     private avatarStorage: AvatarStorageService,
+    private discoverUsersUseCase: DiscoverUsersUseCaseImpl,
+    private connectionClient: ConnectionMessagingClientService,
   ) {}
 
   @Post('')
@@ -92,6 +97,38 @@ export class UserController {
     return this.userDtoMapper.toResponse(user);
   }
 
+  @Get('/:id/discover')
+  async discoverUsers(@Param('id') id: string): Promise<UserResponseDTO[]> {
+    const users = await this.userService.discoverUsers(id);
+    return this.userDtoMapper.toResponseList(users);
+  }
+
+  @Get('/:id/compatibility/:otherId')
+  async getCompatibility(
+    @Param('id') userId: string,
+    @Param('otherId') otherId: string,
+  ): Promise<{ score: number }> {
+    const [me, other] = await Promise.all([
+      this.userRepository.findById(userId),
+      this.userRepository.findById(otherId),
+    ]);
+
+    if (!me || !other) return { score: 0 };
+
+    const connectionsResponse = await this.connectionClient.getAllConnections();
+    const allConnections: Array<{ requesterId: string; receiverId: string; status: string }> =
+      connectionsResponse.connections ?? [];
+
+    const myFriendIds = new Set<string>(
+      allConnections
+        .filter(c => c.status === 'ACCEPTED' && (c.requesterId === userId || c.receiverId === userId))
+        .map(c => c.requesterId === userId ? c.receiverId : c.requesterId),
+    );
+
+    const score = this.discoverUsersUseCase.calculateCompatibility(me, other, myFriendIds, allConnections);
+    return { score };
+  }
+
   @Get('/:id')
   async getUserById(@Param('id') id: string): Promise<UserResponseDTO> {
     const user = await this.userService.getUserById(id);
@@ -102,6 +139,18 @@ export class UserController {
   async getAllUsers(): Promise<UserResponseDTO[]> {
     const users = await this.userService.getAllUsers();
     return this.userDtoMapper.toResponseList(users);
+  }
+
+  @Patch('/:id/presence')
+  async updatePresence(
+    @Param('id') id: string,
+    @Body() body: { isOnline: boolean },
+  ): Promise<void> {
+    const user = await this.userRepository.findById(id);
+    if (!user) throw new NotFoundException(`User ${id} not found`);
+    user.isOnline = body.isOnline;
+    user.lastTimeConnected = new Date();
+    await this.userService.updateUser(id, user);
   }
 
   private async parseUserRequestJson(dataJson: string): Promise<UserRequestDTO> {

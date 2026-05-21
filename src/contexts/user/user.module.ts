@@ -23,6 +23,7 @@ import { DeleteUserUseCaseImpl } from './application/use-cases/user/delete-user-
 import { GetUserUseCaseImpl } from './application/use-cases/user/get-user-use-case.impl';
 import { GetAllUsersUseCaseImpl } from './application/use-cases/user/get-all-users-use-case.impl';
 import { UpdateUserUseCaseImpl } from './application/use-cases/user/update-user-use-case.impl';
+import { DiscoverUsersUseCaseImpl } from './application/use-cases/user/discover-users-use-case.impl';
 import { CreateInterestUseCaseImpl } from './application/use-cases/interest/create-interest-use-case.impl';
 import { DeleteInterestUseCaseImpl } from './application/use-cases/interest/delete-interest-use-case.impl';
 import { GetInterestUseCaseImpl } from './application/use-cases/interest/get-interest-use-case.impl';
@@ -78,6 +79,7 @@ import { AvatarStorageService } from './infrastructure/adapters/out/storage/avat
     UserDtoMapper,
     InterestDtoMapper,
     ConnectionMessagingClientService,
+    DiscoverUsersUseCaseImpl,
     {
       provide: 'CreateUserUseCaseToken',
       useClass: CreateUserUseCaseImpl,
@@ -93,6 +95,10 @@ import { AvatarStorageService } from './infrastructure/adapters/out/storage/avat
     {
       provide: 'GetAllUsersUseCaseToken',
       useClass: GetAllUsersUseCaseImpl,
+    },
+    {
+      provide: 'DiscoverUsersUseCaseToken',
+      useClass: DiscoverUsersUseCaseImpl,
     },
     {
       provide: 'UpdateUserUseCaseToken',
