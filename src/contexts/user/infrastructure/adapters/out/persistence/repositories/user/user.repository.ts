@@ -19,8 +19,10 @@ export class UserRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     const normalizedEmail = email.trim().toLowerCase();
+    // Use exact string match with collation instead of regex to avoid ReDoS
     const document = await this.userModel
-      .findOne({ email: new RegExp(`^${normalizedEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') })
+      .findOne({ email: normalizedEmail })
+      .collation({ locale: 'en', strength: 2 })
       .populate('interests')
       .exec();
     return document ? this.userMapper.toDomain(document) : null;
