@@ -88,8 +88,7 @@
       "!**/controllers/connection.controller.ts",
       "!**/controllers/interest.controller.ts",
       "!**/controllers/user-message.controller.ts",
-      "!**/storage/**",
-      "!**/use-cases/user/get-compatibility-use-case.impl.ts"
+      "!**/storage/**"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"

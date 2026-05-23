@@ -49,7 +49,81 @@ describe('UserController', () => {
     expect(result).toBe(mockUserDto);
   });
 
-  it('should update user', async () => {
+  it('should update user with multipart form data', async () => {
+    const mockReq = { headers: { 'content-type': 'multipart/form-data; boundary=xxx' } } as any;
+    const validBody = {
+      username: 'testuser', name: 'Test', lastname: 'User',
+      email: 'test@mail.com', birthDate: new Date('2000-01-01'),
+      semester: 5, status: 'ACTIVE', programs: ['SYSTEMS_ENGINEERING'], role: 'USER',
+    };
+    const dataField = JSON.stringify(validBody);
+    const result = await controller.updateUser('u1', mockReq, undefined, { data: dataField } as any);
+    expect(mockService.updateUser).toHaveBeenCalled();
+    expect(result).toBe(mockUserDto);
+  });
+
+  it('should throw BadRequestException if data field is missing in multipart', async () => {
+    const mockReq = { headers: { 'content-type': 'multipart/form-data' } } as any;
+    await expect(controller.updateUser('u1', mockReq, undefined, {} as any))
+      .rejects.toThrow();
+  });
+
+  it('should throw BadRequestException if data field is invalid JSON in multipart', async () => {
+    const mockReq = { headers: { 'content-type': 'multipart/form-data' } } as any;
+    await expect(controller.updateUser('u1', mockReq, undefined, { data: 'not-json' } as any))
+      .rejects.toThrow();
+  });
+
+  it('should update user with multipart form data and avatar', async () => {
+    const mockReq = { headers: { 'content-type': 'multipart/form-data; boundary=xxx' } } as any;
+    const validBody = {
+      username: 'testuser', name: 'Test', lastname: 'User',
+      email: 'test@mail.com', birthDate: new Date('2000-01-01'),
+      semester: 5, status: 'ACTIVE', programs: ['SYSTEMS_ENGINEERING'], role: 'USER',
+    };
+    const dataField = JSON.stringify(validBody);
+    const mockAvatar = { buffer: Buffer.from('abc'), originalname: 'avatar.png' } as any;
+    const result = await controller.updateUser('u1', mockReq, mockAvatar, { data: dataField } as any);
+    expect(mockService.updateUser).toHaveBeenCalled();
+    expect(result).toBe(mockUserDto);
+  });
+
+  it('should throw BadRequestException if request validation fails', async () => {
+    const mockReq = { headers: { 'content-type': 'application/json' } } as any;
+    const invalidBody = {
+      username: '',
+      name: 'Test',
+      lastname: 'User',
+      email: 'invalid-email',
+      birthDate: new Date('2000-01-01'),
+      semester: 'not-a-number',
+      status: 'ACTIVE',
+      programs: ['SYSTEMS_ENGINEERING'],
+      role: 'USER',
+    };
+    await expect(controller.updateUser('u1', mockReq, undefined, invalidBody as any))
+      .rejects.toThrow();
+  });
+
+  it('should normalize interests correctly', async () => {
+    const mockReq = { headers: { 'content-type': 'application/json' } } as any;
+    const validBody = {
+      username: 'testuser',
+      name: 'Test',
+      lastname: 'User',
+      email: 'test@mail.com',
+      birthDate: new Date('2000-01-01'),
+      semester: 5,
+      status: 'ACTIVE',
+      programs: ['SYSTEMS_ENGINEERING'],
+      role: 'USER',
+      interests: ['interest-1', '', null, { id: 'interest-2' }, { id: '' }, {}],
+    };
+    const result = await controller.updateUser('u1', mockReq, undefined, validBody as any);
+    expect(mockService.updateUser).toHaveBeenCalled();
+    expect(result).toBe(mockUserDto);
+  });
+  it('should update user without multipart', async () => {
     const mockReq = { headers: { 'content-type': 'application/json' } } as any;
     const validBody = {
       username: 'testuser',

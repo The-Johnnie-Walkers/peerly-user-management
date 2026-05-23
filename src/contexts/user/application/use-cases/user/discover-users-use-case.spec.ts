@@ -117,4 +117,77 @@ describe('DiscoverUsersUseCaseImpl', () => {
     const scoreWithout = (useCase as any).calculateCompatibility(me, candidate1, new Set(), []);
     expect(scoreWithMutual).toBeGreaterThanOrEqual(scoreWithout);
   });
+
+  it('should handle null connections when discovering users', async () => {
+    mockConnectionClient.getAllConnections.mockResolvedValue({ connections: null });
+    const result = await useCase.discoverUsers('me');
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should handle connections where the current user or other user is receiver/requester in different status', async () => {
+    const allConnections = [
+      { requesterId: 'friend-1', receiverId: 'me', status: 'ACCEPTED' },
+      { requesterId: 'friend-1', receiverId: 'c1', status: 'ACCEPTED' },
+      { requesterId: 'c2', receiverId: 'me', status: 'PENDING' },
+    ];
+    mockConnectionClient.getAllConnections.mockResolvedValue({ connections: allConnections });
+    const result = await useCase.discoverUsers('me');
+    expect(result.every(u => u.id !== 'c2')).toBe(true);
+  });
+
+  it('should handle null or empty interests and schedules', () => {
+    const userA = makeUser({ id: 'a', interests: null, freeTimeSchedule: null, programs: null, semester: null, birthDate: null });
+    const userB = makeUser({ id: 'b', interests: [], freeTimeSchedule: [], programs: [], semester: undefined, birthDate: undefined });
+    const score = (useCase as any).calculateCompatibility(userA, userB, new Set(), []);
+    expect(score).toBe(7);
+  });
+
+  it('should handle overlapMinutes calculation correctly when schedules exist', () => {
+    const userA = makeUser({
+      id: 'a',
+      freeTimeSchedule: [{ dayOfTheWeek: 'MONDAY', startsAt: new Date('1970-01-01T08:00:00Z'), endsAt: new Date('1970-01-01T10:00:00Z') }]
+    });
+    const userB = makeUser({
+      id: 'b',
+      freeTimeSchedule: [{ dayOfTheWeek: 'MONDAY', startsAt: new Date('1970-01-01T09:00:00Z'), endsAt: new Date('1970-01-01T11:00:00Z') }]
+    });
+    const score = (useCase as any).calculateCompatibility(userA, userB, new Set(), []);
+    expect(score).toBeGreaterThan(0);
+  });
+
+  it('should handle age calculation branches for birthdates in the past and future relative to current month/day', () => {
+    const today = new Date();
+    
+    const birthdatePassed = new Date(today.getFullYear() - 20, today.getMonth() - 1, today.getDate());
+    const birthdateFutureMonth = new Date(today.getFullYear() - 20, today.getMonth() + 1, today.getDate());
+    
+    // Avoid invalid days (e.g. today.getDate() + 2 on last day of month) by using a safe day
+    const safeDay = today.getDate() > 20 ? 10 : today.getDate() + 2;
+    const birthdateFutureDay = new Date(today.getFullYear() - 20, today.getMonth(), safeDay);
+
+    // Setup dates for getAge check where today's day compared to birthdate day is tested
+    // To trigger (today.getDate() < birth.getDate()), make birth.getDate() larger than today.getDate()
+    let todayTest = new Date(2026, 5, 15);
+    let birthPassed = new Date(2006, 4, 15); // birthday passed
+    let birthFutureMonth = new Date(2006, 6, 15); // birthday in future month
+    let birthFutureDay = new Date(2006, 5, 20); // birthday in same month but future day
+
+    const agePassed = (useCase as any).getAge(birthPassed);
+    const ageFutureMonth = (useCase as any).getAge(birthFutureMonth);
+    const ageFutureDay = (useCase as any).getAge(birthFutureDay);
+
+    // Let's call the helper with custom reference by temporarily mocking Date inside the test if needed, or by simple math.
+    // getAge uses `new Date()` internally so we can pass hardcoded birthDates and check their results based on current year 2026.
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+    const currentDate = today.getDate();
+
+    const testPassed = new Date(currentYear - 20, currentMonth - 1, currentDate);
+    const testFutureMonth = new Date(currentYear - 20, currentMonth + 1, currentDate);
+    const testFutureDay = new Date(currentYear - 20, currentMonth, currentDate + 2);
+
+    expect((useCase as any).getAge(testPassed)).toBe(20);
+    expect((useCase as any).getAge(testFutureMonth)).toBe(19);
+    expect((useCase as any).getAge(testFutureDay)).toBe(19);
+  });
 });
