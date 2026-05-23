@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.34% </span>
+                <span class="strong">78.72% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>68/94</span>
+                <span class='fraction'>74/94</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.39% </span>
+                <span class="strong">62.37% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>61/101</span>
+                <span class='fraction'>63/101</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.11% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>11/18</span>
+                <span class='fraction'>12/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.72% </span>
+                <span class="strong">78.4% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>64/88</span>
+                <span class='fraction'>69/88</span>
             </div>
         
             
@@ -289,12 +289,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -405,11 +405,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -502,7 +502,7 @@ export class UserController {
   @UseInterceptors(
     FileInterceptor('avatar', {
       storage: memoryStorage(),
-      limits: { fileSize: 5 * 1024 * 1024 },
+      limits: { fileSize: 5 * 1024 * 1024, files: 1 }, // NOSONAR - file size is explicitly limited to 5MB
     }),
   )
   async updateUser(
@@ -595,15 +595,15 @@ export class UserController {
   }
 &nbsp;
   @Patch('/:id/presence')
-  async <span class="fstat-no" title="function not covered" >updatePresence(</span>
+  async updatePresence(
     @Param('id') id: string,
     @Body() body: { isOnline: boolean },
   ): Promise<span class="branch-1 cbranch-no" title="branch not covered" >&lt;void&gt; {</span>
-    const user = <span class="cstat-no" title="statement not covered" >await this.userRepository.findById(id);</span>
-<span class="cstat-no" title="statement not covered" >    if (!user) <span class="cstat-no" title="statement not covered" >throw new NotFoundException(`User ${id} not found`);</span></span>
-<span class="cstat-no" title="statement not covered" >    user.isOnline = body.isOnline;</span>
-<span class="cstat-no" title="statement not covered" >    user.lastTimeConnected = new Date();</span>
-<span class="cstat-no" title="statement not covered" >    await this.userService.updateUser(id, user);</span>
+    const user = await this.userRepository.findById(id);
+    if (!user) throw new NotFoundException(`User ${id} not found`);
+    user.isOnline = body.isOnline;
+    user.lastTimeConnected = new Date();
+    await this.userService.updateUser(id, user);
   }
 &nbsp;
   private <span class="fstat-no" title="function not covered" >async </span>parseUserRequestJson(dataJson: string): Promise&lt;UserRequestDTO&gt; {
@@ -652,7 +652,7 @@ export class UserController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-22T21:58:27.549Z
+                at 2026-05-23T03:19:42.805Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>
