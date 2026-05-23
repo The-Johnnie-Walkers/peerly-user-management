@@ -1,0 +1,141 @@
+import { Module } from '@nestjs/common';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ActivityMessagingClientService } from './infrastructure/adapters/out/messaging/activity-messaging-client.service';
+import { ActivityController } from './infrastructure/adapters/in/http/controllers/activity.controller';
+import { UserSchemaDefinition } from './infrastructure/adapters/out/persistence/entities/user.schema';
+import { User } from './domain/entities/user.entity';
+import { Interest } from './domain/entities/interest.entity';
+import { InterestSchemaDefinition } from './infrastructure/adapters/out/persistence/entities/interest.schema';
+import { UserMapper } from './infrastructure/adapters/out/persistence/mappers/user.mapper';
+import { UserRepository } from './infrastructure/adapters/out/persistence/repositories/user/user.repository';
+import { InterestRepository } from './infrastructure/adapters/out/persistence/repositories/interest/interest.repository';
+import { UserController } from './infrastructure/adapters/in/http/controllers/user.controller';
+import { InterestController } from './infrastructure/adapters/in/http/controllers/interest.controller';
+import { UserMessageController } from './infrastructure/adapters/in/http/controllers/user-message.controller';
+import { UserService } from './application/service/user.service';
+import { InterestService } from './application/service/interest.service';
+import { UserDtoMapper } from './infrastructure/adapters/in/http/mapper/user-dto.mapper';
+import { InterestDtoMapper } from './infrastructure/adapters/in/http/mapper/interest-dto.mapper';
+import { CreateUserUseCaseImpl } from './application/use-cases/user/create-user-use-case.impl';
+import { UpdateInterestUseCaseImpl } from './application/use-cases/interest/update-interest-use-case.impl';
+import { DeleteUserUseCaseImpl } from './application/use-cases/user/delete-user-use-case.impl';
+import { GetUserUseCaseImpl } from './application/use-cases/user/get-user-use-case.impl';
+import { GetAllUsersUseCaseImpl } from './application/use-cases/user/get-all-users-use-case.impl';
+import { UpdateUserUseCaseImpl } from './application/use-cases/user/update-user-use-case.impl';
+import { DiscoverUsersUseCaseImpl } from './application/use-cases/user/discover-users-use-case.impl';
+import { CreateInterestUseCaseImpl } from './application/use-cases/interest/create-interest-use-case.impl';
+import { DeleteInterestUseCaseImpl } from './application/use-cases/interest/delete-interest-use-case.impl';
+import { GetInterestUseCaseImpl } from './application/use-cases/interest/get-interest-use-case.impl';
+import { GetAllInterestsUseCaseImpl } from './application/use-cases/interest/get-all-interests-use-case.impl';
+import { InterestRepositoryAdapter } from './infrastructure/adapters/out/persistence/repositories/interest/interest-adapter.repository';
+import { UserRepositoryAdapter } from './infrastructure/adapters/out/persistence/repositories/user/user-adapter.repository';
+import { ConnectionMessagingClientService } from './infrastructure/adapters/out/messaging/connection-messaging-client.service';
+import { CommunityController } from './infrastructure/adapters/in/http/controllers/community.controller';
+import { ConnectionController } from './infrastructure/adapters/in/http/controllers/connection.controller';
+import { ConfigModule } from '@nestjs/config';
+import { AvatarStorageService } from './infrastructure/adapters/out/storage/avatar-storage.service';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchemaDefinition },
+      { name: Interest.name, schema: InterestSchemaDefinition },
+    ]),
+    ClientsModule.register([
+      {
+        name: 'CONNECTION_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: [`${process.env.RABBIT_MQ_URL}`],
+          queue: 'connections_queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
+      },
+      {
+        name: 'ACTIVITY_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: [`${process.env.RABBIT_MQ_URL}`],
+          queue: 'activities_queue',
+          queueOptions: {
+            durable: true,
+          },
+        },
+      },
+    ]),
+  ],
+  providers: [
+    UserMapper,
+    UserRepository,
+    InterestRepository,
+    UserService,
+    InterestService,
+    UserDtoMapper,
+    InterestDtoMapper,
+    ConnectionMessagingClientService,
+    DiscoverUsersUseCaseImpl,
+    {
+      provide: 'CreateUserUseCaseToken',
+      useClass: CreateUserUseCaseImpl,
+    },
+    {
+      provide: 'DeleteUserUseCaseToken',
+      useClass: DeleteUserUseCaseImpl,
+    },
+    {
+      provide: 'GetUserUseCaseToken',
+      useClass: GetUserUseCaseImpl,
+    },
+    {
+      provide: 'GetAllUsersUseCaseToken',
+      useClass: GetAllUsersUseCaseImpl,
+    },
+    {
+      provide: 'DiscoverUsersUseCaseToken',
+      useClass: DiscoverUsersUseCaseImpl,
+    },
+    {
+      provide: 'UpdateUserUseCaseToken',
+      useClass: UpdateUserUseCaseImpl,
+    },
+    {
+      provide: 'CreateInterestUseCaseToken',
+      useClass: CreateInterestUseCaseImpl,
+    },
+    {
+      provide: 'UpdateInterestUseCaseToken',
+      useClass: UpdateInterestUseCaseImpl,
+    },
+    {
+      provide: 'DeleteInterestUseCaseToken',
+      useClass: DeleteInterestUseCaseImpl,
+    },
+    {
+      provide: 'GetInterestUseCaseToken',
+      useClass: GetInterestUseCaseImpl,
+    },
+    {
+      provide: 'GetAllInterestsUseCaseToken',
+      useClass: GetAllInterestsUseCaseImpl,
+    },
+    {
+      provide: 'InterestRepositoryOutPortToken',
+      useClass: InterestRepositoryAdapter,
+    },
+    {
+      provide: 'UserRepositoryOutPortToken',
+      useClass: UserRepositoryAdapter,
+    },
+    ActivityMessagingClientService,
+    AvatarStorageService,
+  ],
+  controllers: [UserController, InterestController, UserMessageController, ConnectionController,
+    CommunityController, ActivityController],
+})
+export class UserModule { }

@@ -19,6 +19,13 @@ lerna-debug.log*
 .env.test
 .env.production
 
+
 # temp directory
 .temp
 .tmp
+
+# Uploaded avatars (keep directory via .gitkeep)
+/uploads/avatars/*
+!/uploads/avatars/.gitkeep
+
+.vscode/
