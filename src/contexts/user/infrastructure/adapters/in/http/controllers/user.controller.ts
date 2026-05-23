@@ -49,7 +49,7 @@ export class UserController {
   @UseInterceptors(
     FileInterceptor('avatar', {
       storage: memoryStorage(),
-      limits: { fileSize: 5 * 1024 * 1024 },
+      limits: { fileSize: 5 * 1024 * 1024, files: 1 }, // NOSONAR - file size is explicitly limited to 5MB
     }),
   )
   async updateUser(

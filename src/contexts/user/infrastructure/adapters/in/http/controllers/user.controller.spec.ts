@@ -108,4 +108,23 @@ describe('UserController', () => {
     const result = await controller.getCompatibility('u1', 'bad');
     expect(result.score).toBe(0);
   });
+
+  it('should update presence to online', async () => {
+    mockRepo.findById.mockResolvedValue({ ...mockUser, isOnline: false, lastTimeConnected: null });
+    mockService.updateUser.mockResolvedValue(mockUser);
+    await controller.updatePresence('u1', { isOnline: true });
+    expect(mockService.updateUser).toHaveBeenCalled();
+  });
+
+  it('should throw NotFoundException on updatePresence if user not found', async () => {
+    mockRepo.findById.mockResolvedValue(null);
+    await expect(controller.updatePresence('bad', { isOnline: true })).rejects.toThrow(NotFoundException);
+  });
+
+  it('should update presence to offline', async () => {
+    mockRepo.findById.mockResolvedValue({ ...mockUser, isOnline: true, lastTimeConnected: new Date() });
+    mockService.updateUser.mockResolvedValue(mockUser);
+    await controller.updatePresence('u1', { isOnline: false });
+    expect(mockService.updateUser).toHaveBeenCalled();
+  });
 });

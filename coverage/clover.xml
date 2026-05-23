@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1779487107635" clover="3.2.0">
-  <project timestamp="1779487107635" name="All files">
-    <metrics statements="263" coveredstatements="218" conditionals="194" coveredconditionals="105" methods="92" coveredmethods="70" elements="549" coveredelements="393" complexity="0" loc="263" ncloc="263" packages="5" files="16" classes="16"/>
+<coverage generated="1779506382902" clover="3.2.0">
+  <project timestamp="1779506382902" name="All files">
+    <metrics statements="263" coveredstatements="223" conditionals="194" coveredconditionals="107" methods="92" coveredmethods="71" elements="549" coveredelements="401" complexity="0" loc="263" ncloc="263" packages="5" files="16" classes="16"/>
     <package name="application.service">
       <metrics statements="30" coveredstatements="30" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="13"/>
       <file name="interest.service.ts" path="C:\Users\daavi\OneDrive\Escritorio\ARSW\PROYECTO\peerly-user-management\src\contexts\user\application\service\interest.service.ts">
@@ -99,10 +99,10 @@
       </file>
       <file name="discover-users-use-case.impl.ts" path="C:\Users\daavi\OneDrive\Escritorio\ARSW\PROYECTO\peerly-user-management\src\contexts\user\application\use-cases\user\discover-users-use-case.impl.ts">
         <metrics statements="76" coveredstatements="76" conditionals="69" coveredconditionals="44" methods="26" coveredmethods="26"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
         <line num="31" count="8" type="stmt"/>
         <line num="32" count="8" type="cond" truecount="3" falsecount="1"/>
         <line num="37" count="4" type="stmt"/>
@@ -199,9 +199,9 @@
       </file>
     </package>
     <package name="infrastructure.adapters.in.http.controllers">
-      <metrics statements="88" coveredstatements="64" conditionals="101" coveredconditionals="61" methods="18" coveredmethods="11"/>
+      <metrics statements="88" coveredstatements="69" conditionals="101" coveredconditionals="63" methods="18" coveredmethods="12"/>
       <file name="user.controller.ts" path="C:\Users\daavi\OneDrive\Escritorio\ARSW\PROYECTO\peerly-user-management\src\contexts\user\infrastructure\adapters\in\http\controllers\user.controller.ts">
-        <metrics statements="88" coveredstatements="64" conditionals="101" coveredconditionals="61" methods="18" coveredmethods="11"/>
+        <metrics statements="88" coveredstatements="69" conditionals="101" coveredconditionals="63" methods="18" coveredmethods="12"/>
         <line num="1" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
@@ -215,12 +215,12 @@
         <line num="27" count="1" type="stmt"/>
         <line num="28" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
-        <line num="33" count="10" type="cond" truecount="6" falsecount="2"/>
-        <line num="34" count="10" type="cond" truecount="3" falsecount="1"/>
-        <line num="35" count="10" type="cond" truecount="3" falsecount="1"/>
-        <line num="36" count="10" type="cond" truecount="3" falsecount="1"/>
-        <line num="37" count="10" type="cond" truecount="3" falsecount="1"/>
-        <line num="38" count="10" type="stmt"/>
+        <line num="33" count="13" type="cond" truecount="6" falsecount="2"/>
+        <line num="34" count="13" type="cond" truecount="3" falsecount="1"/>
+        <line num="35" count="13" type="cond" truecount="3" falsecount="1"/>
+        <line num="36" count="13" type="cond" truecount="3" falsecount="1"/>
+        <line num="37" count="13" type="cond" truecount="3" falsecount="1"/>
+        <line num="38" count="13" type="stmt"/>
         <line num="42" count="1" type="cond" truecount="6" falsecount="2"/>
         <line num="43" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
@@ -267,11 +267,11 @@
         <line num="140" count="1" type="stmt"/>
         <line num="141" count="1" type="stmt"/>
         <line num="145" count="1" type="stmt"/>
-        <line num="149" count="0" type="stmt"/>
-        <line num="150" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="151" count="0" type="stmt"/>
-        <line num="152" count="0" type="stmt"/>
-        <line num="153" count="0" type="stmt"/>
+        <line num="149" count="3" type="stmt"/>
+        <line num="150" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="151" count="2" type="stmt"/>
+        <line num="152" count="2" type="stmt"/>
+        <line num="153" count="2" type="stmt"/>
         <line num="158" count="0" type="stmt"/>
         <line num="159" count="0" type="stmt"/>
         <line num="161" count="0" type="stmt"/>
